@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "@replit/database": "^2.0.1",
+    "dank-twitch-irc": "^4.3.0",
+    "dateformat": "^4.6.3",
+    "directory-import": "^2.3.1",
+    "fs-extra": "^10.0.1",
+    "humanize-duration": "^3.27.1",
+    "iso-language-converter": "^1.1.0",
+    "node-fetch": "^3.2.2"
+  }
+}

@@ -1,0 +1,6 @@
+suggestions/
+.build/
+node-modules/
+replit.nix
+tsconfig.json
+.replit
