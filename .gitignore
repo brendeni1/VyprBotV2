@@ -1,6 +1,6 @@
 suggestions/
 .build/
-node-modules/
+node_modules/
 replit.nix
 tsconfig.json
 .replit
