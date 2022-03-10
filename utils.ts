@@ -44,8 +44,8 @@ const listData = async (prefix) => {
 }
 exports.listData = listData
 
-const fetch = async (url) => {
-  response = await nodeFetch(url)
+const fetch = async (url, headers) => {
+  response = await nodeFetch(url, headers)
   response = await response.json()
   if (response.error || response.status) { throw response }
   return response
@@ -69,7 +69,7 @@ const addHours = (date, hours) => {
 exports.addHours = addHours
 
 const checkAdmin = async (user) => {
-  const admins = (await db.get('admins')).split(' ')
+  const admins = (await db.get('admins')).toString().split(' ')
   return admins.indexOf(user) != -1
 }
 exports.checkAdmin = checkAdmin

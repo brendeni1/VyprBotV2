@@ -1,18 +1,9 @@
-// import utils from '../utils'
+import utils from '../utils'
 
-// module.exports = async (client, context) => {
-//   if(!utils.checkPermitted(context.user) && !utils.checkAdmin(context.user)) { return { success: false, reply: `You don't have permission to use that command!` }  }
-//     if (isPermitted) {
-//       if (!isNumber(args[0]) || args[0] > 100 || args[0] < 1) {
-//         client.me(channel, `${user} --> Invalid Syntax! The max clear is 100, and the format should be: "${prefix}clear {amount}"!`);
-//       }
-//       else {
-//         for (let i = args[0]; i--;)
-//           client.privmsg(channel, `/clear`);
-//       }
-//     }
-//     else {
-//       client.me(channel, `${user} --> You aren't permitted to use that command. Get the broadcaster to permit you and try again!`)
-//     }
-//   })
-// }
+module.exports = async (client, context) => {
+  if(!utils.checkPermitted(context.user) && !utils.checkAdmin(context.user)) { return { success: false, reply: `You don't have permission to use that command! Ask the broadcaster to permit you and try again.` }  }
+  if (!/^\d+$/.test(context.args[0]) || context.args[0] > 100 || context.args[0] < 1) { return { success: false, reply: `Invalid Syntax! The max clear is 100, and the correct syntax is: "${context.prefix}clear {amount}"!` } }
+  for (let i = context.args[0]; i--;) {
+    client.privmsg(context.channel, `/clear`)
+  }
+}
