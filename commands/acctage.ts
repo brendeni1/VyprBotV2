@@ -8,6 +8,6 @@ module.exports = async (client, context) => {
     const userData = await utils.fetch(`https://api.ivr.fi/v2/twitch/user/${user}?id=${id}`)
     return { success: true, reply: `Name: ${userData.login} | Date: ${utils.formatDate(userData.createdAt, 'fullDate')} | Time since then: ${utils.formatDelta(userData.createdAt)}.` }
   }catch(e) {
-    return { success: false, reply: `${e.message}` }
+    return { success: false, reply: e }
   }
 }

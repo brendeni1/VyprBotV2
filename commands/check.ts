@@ -24,5 +24,5 @@ module.exports = async (client, context) => {
     return { success: false, reply: `You don't own that suggestion, and can't view it!` }
   }
   const actionDetails = location == 'denied' || location == 'approved' ? suggestion.reason == '' ? `| No reason provided | Action By: ${suggestion.actionBy} |` : `| Reason: ${suggestion.reason} | Action By: ${suggestion.actionBy} |` : `|`
-  return { success: true, reply: `ID: ${id} | State: ${location} | Date Created: ${utils.formatDate(suggestion.date, "mmmm dS, yyyy ' at ' h:MM TT")} (${utils.formatDelta(suggestion.date)} ago) ${actionDetails} Suggestion: ${suggestion.suggestion}` }
+  return { success: true, reply: `ID: ${id} | State: ${location} | Channel Created: ${suggestion.channel} | Date Created: ${utils.formatDate(suggestion.date, "mmmm dS, yyyy ' at ' h:MM TT")} (${utils.formatDelta(suggestion.date)} ago) ${actionDetails} Suggestion: ${suggestion.suggestion}` }
 }

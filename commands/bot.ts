@@ -10,6 +10,6 @@ module.exports = async (client, context) => {
     const emoji = userData.verifiedBot ? ' ✅ ' : ' ❌ '
     return { success: true, reply: `${userData.displayName} is ${adverb} a verified bot! ${emoji}` }
   }catch(e) {
-    return { success: false, reply: `${e.message}` }
+    return { success: false, reply: e }
   }
 }

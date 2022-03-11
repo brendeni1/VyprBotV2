@@ -1,7 +1,7 @@
 import utils from '../utils'
 
 module.exports = async (client, context) => {
-  const idCheck = context.args.join(' ').match(/(uid|lookup)(:|=)(true|false)/i)
+  const idCheck = context.args.join(' ').match(/(u?id|lookup)(:|=)(true|false)/i)
   const id = idCheck ? Boolean(idCheck[2].toLowerCase()) : false; if (idCheck) { context.args.splice(context.args.indexOf(idCheck[0]), 1) }
   user = context.args[0] ? context.args[0].toLowerCase().replace('@', '') : context.user
   try {
@@ -30,8 +30,8 @@ module.exports = async (client, context) => {
       creationDate: creationDate,
       timeSinceCreation: timeSinceCreation,
     }
-    return { success: true, obj, reply: `Display Name: ${obj.name} | Banned: ${obj.banned} | UID: ${obj.uid} | Created: ${obj.creationDate} (${obj.timeSinceCreation} ago) | Followers: ${obj.followers} | Colour: ${obj.colour} | Bio: ${obj.bio} | Profile Picture: ${obj.pfp} | Roles: ${obj.roles}` }
+    return { success: true, obj, reply: `Display Name: @${obj.name} | Banned: ${obj.banned} | UID: ${obj.uid} | Created: ${obj.creationDate} (${obj.timeSinceCreation} ago) | Followers: ${obj.followers} | Colour: ${obj.colour ?? '(No Colour Set)'} | Bio: ${obj.bio ?? '(No Bio Set)'} | Profile Picture: ${obj.pfp} | Roles: ${obj.roles}` }
   } catch (err) {
-    return { success: false, reply: `${err.message}` }
+    return { success: false, reply: err }
   }
 }

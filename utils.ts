@@ -44,11 +44,13 @@ const listData = async (prefix) => {
 }
 exports.listData = listData
 
-const fetch = async (url, headers) => {
-  response = await nodeFetch(url, headers)
-  response = await response.json()
-  if (response.error || response.status) { throw response }
-  return response
+const fetch = async (url, headers, format) => {
+  format = format ? format : 'json'
+  const response = await nodeFetch(url, headers)
+  if (+response.status != 200) {
+    throw Error(response.statusText)
+  }
+  return await response[format]()
 }
 exports.fetch = fetch
 
@@ -74,9 +76,11 @@ const checkAdmin = async (user) => {
 }
 exports.checkAdmin = checkAdmin
 
-const checkPermitted = async (user, channel) => {
-  const permits = (await db.get(`${channel}Permits`)).toString().split(' ')
-  return permits.indexOf(user) != -1
+const checkPermitted = async (context) => {
+  if (context.user == context.channel) { return true }
+  let permits = await db.get(`${context.channel}Permits`)
+  if (!permits) { return false }
+  return permits.indexOf(context.user) != -1
 }
 exports.checkPermitted = checkPermitted
 
@@ -86,7 +90,7 @@ const getChannels = () => {
 exports.getChannels = getChannels
 
 const randInt = async (min, max) => {
-  return Math.floor(Math.random() * (max - min) ) + min
+  return Math.floor(Math.random() * (max - min)) + min
 }
 exports.randInt = randInt
 
@@ -95,3 +99,12 @@ const randArrayElement = (array) => {
   return array[number]
 }
 exports.randArrayElement = randArrayElement
+
+const capitalizeEachWord = (str) => {
+  var splitStr = str.toLowerCase().split(' ');
+  for (var i = 0; i < splitStr.length; i++) {
+    splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+  }
+  return splitStr.join(' ')
+}
+exports.capitalizeEachWord = capitalizeEachWord

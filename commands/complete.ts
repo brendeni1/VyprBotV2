@@ -12,7 +12,7 @@ module.exports = async (client, context) => {
     return { success: false, reply: `There is no suggestion with that the ID: ${id} !` }
   }
   let suggestionDetails = await fs.readJson(`suggestions/active/${id}.json`)
-  await fs.writeJson(`suggestions/active/${id}.json`, { user: suggestionDetails.user, actionBy: context.user, id: id, date: suggestionDetails.date, dateApproved: new Date().toISOString(), state: 'Approved/Finished', suggestion: suggestionDetails.suggestion, reason: reason })
+  await fs.writeJson(`suggestions/active/${id}.json`, { user: suggestionDetails.user, actionBy: context.user, id: id, channel: suggestionDetails.channel, date: suggestionDetails.date, dateApproved: new Date().toISOString(), state: 'Approved/Finished', suggestion: suggestionDetails.suggestion, reason: reason })
   await fs.rename(`suggestions/active/${id}.json`, `suggestions/${action}/${id}.json`)
   client.whisper(suggestionDetails.user, `[Suggestion Update] Your suggestion with the ID ${suggestionDetails.id} was ${action}! Notes: ${reason}`)
   suggestionDetails.user == 'darkvypr' ? null : await utils.fetchPost(`https://supinic.com/api/bot/reminder?auth_user=${process.env['SUPI_USER_AUTH']}&auth_key=${process.env['SUPI_USERKEY_AUTH']}&username=${suggestionDetails.user}&private=true&text=[VyprBot Update] Your suggestion on VyprBot with the ID ${suggestionDetails.id} was ${action}! Notes: ${reason}`)
