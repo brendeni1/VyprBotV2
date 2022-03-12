@@ -2,7 +2,7 @@ import utils from '../utils'
 import fs from 'fs-extra'
 
 module.exports = async (client, context) => {
-  if(!context.args[0]) { return { success: false, reply: `Please provide a valid command to view the code of!` } }
+  if(!context.args[0]) { return { success: true, reply: `VyprBot's code can be found at: https://github.com/DarkVypr/VyprBotv2` } }
   let command = context.args[0].toLowerCase() + '.js'
   if(command == 'followage.js') { command = 'fa.js' }
   if(command == 'subage.js') { command = 'sa.js' }

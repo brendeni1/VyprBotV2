@@ -69,7 +69,7 @@ client.on("PRIVMSG", async (msg) => {
   
   // Prefix
 
-  let prefix = await db.get(`${channel}Prefix`) ?? 'vbt '
+  let prefix = await db.get(`${channel}Prefix`) ?? 'vb '
   
   // Keywords
 
@@ -100,21 +100,6 @@ client.on("PRIVMSG", async (msg) => {
 
   if (!message.startsWith(prefix) || userlow === 'vyprbot') {
     return
-  }
-
-  if (userlow !== 'vyprbot' && userlow !== 'darkvypr') {
-    if (commandcooldown.has(userlow)) { return }
-    else {
-      commandcooldown.add(userlow);
-      setTimeout(() => {
-        commandcooldown.delete(userlow);
-      }, 2000);
-
-      db.get("commandusage").then(function(value) {
-        let usage = +value + 1
-        db.set("commandusage", usage);
-      })
-    }
   }
 
   // Process Messages
@@ -153,7 +138,6 @@ client.on("PRIVMSG", async (msg) => {
       client.me(channel, reply)
     }catch(e) {
       client.me(channel, `${user} --> Twitch is dogshit and broken, please re-execute the command you just did!`)
-      return
     }
   }
   
@@ -163,5 +147,9 @@ client.on("PRIVMSG", async (msg) => {
     let response = await handler(command, client, context)
     if(!response) { return }
     sendReply(response.reply)
+  }
+  else{
+    console.log(command)
+    console.log(cooldown.commandCheck(userlow))
   }
 })
