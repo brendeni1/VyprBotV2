@@ -89,10 +89,15 @@ const getChannels = () => {
 }
 exports.getChannels = getChannels
 
-const randInt = async (min, max) => {
-  return Math.floor(Math.random() * (max - min)) + min
+const randInt = (min, max) => {
+  return Math.floor(Math.random() * (+max + 1 - min)) + min
 }
 exports.randInt = randInt
+
+const randIntNeg = (min, max) => {
+  return Math.floor(Math.random() * (max + min)) - min
+}
+exports.randIntNeg = randIntNeg
 
 const randArrayElement = (array) => {
   const number = Math.floor(Math.random() * array.length)

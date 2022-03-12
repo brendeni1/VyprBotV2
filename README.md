@@ -18,6 +18,10 @@ VyprBot is a general-purpose bot with user-based commands, a loyalty system and 
 
 If you would like this bot to be added to your chat, make sure to read [the commands page](https://bot.darkvypr.com/commands) before asking. After reading, you can use the "vb suggest command" in the bot's chat. Go to [the bots chat](https://twitch.tv/vyprbot) and use the vb suggest command. Example: "`vb suggest I would like the bot to be added to my chat!`". Once I read the suggestion, you will receive a DM on Twitch from the bot saying if you were accepted or denied. I probably wont deny any bot addition requests, but some suggestions may be.
 
+# Can I change the prefix?
+
+Yes! Use: "vb set prefix {your prefix here}"
+
 # Is there a site for this bot?
 
 Yes! The site for VyprBot can be found at: https://bot.darkvypr.com

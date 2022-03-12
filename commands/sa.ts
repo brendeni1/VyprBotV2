@@ -7,7 +7,11 @@ module.exports = async (client, context) => {
     let [hidden, user, channel, subStatus, subType, subTier, giftData, months, streak] = [subDetails.hidden, subDetails.username, subDetails.channel, subDetails.subscribed, subDetails.meta.type, subDetails.meta.tier, subDetails.meta.gift, subDetails.cumulative.months, subDetails.streak.months]
     let remainingOnActiveSub = utils.formatDelta(subDetails.meta.endsAt)
     let timeSinceSubEnded = utils.formatDelta(subDetails.cumulative.end)
-    if (hidden) { return { success: true, reply: `@${user} has hidden their subscription status, or the target channel (#${channel}) is not an affiliate!` } }
+    if (hidden) {
+      let userData = await utils.fetch(`https://api.ivr.fi/v2/twitch/user/${targetChannel}`)
+      if(!userData.roles.isAffiliate && !userData.roles.isPartner && !userData.roles.isStaff) { return { success: false, reply: `@${channel} is not an affiliate!` } }
+      return { success: false, reply: `@${user} has hidden their subscription status!` }
+    }
     if (months == 0) { return { success: true, reply: `@${user} has never been subbed to @${channel}.` } }
     if (!subStatus && months != 0) { return { success: true, reply: `@${user} isn't currently subbed to @${channel} but they have previously. They were subbed for ${months} month(s) and their sub expired ${timeSinceSubEnded} ago.` } }
     if (subTier == 'Custom') { return { success: true, reply: `@${user} is currently subbed to @${channel} with a permanent sub! They have been subbed for ${months} month(s).` } }

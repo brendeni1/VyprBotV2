@@ -4,6 +4,7 @@ import Database from "@replit/database"
 const db = new Database()
 import wiki from 'wikipedia'
 import handler from './commands/handler'
+import cooldown from './cooldown'
 import { ChatClient, AlternateMessageModifier, SlowModeRateLimiter, IgnoreUnhandledPromiseRejectionsMixin } from "dank-twitch-irc"
 let client = new ChatClient({
 
@@ -158,10 +159,9 @@ client.on("PRIVMSG", async (msg) => {
   
   // Command
 
-  if(command && msg.senderUsername == 'darkvypr') {
+  if(command && !cooldown.commandCheck(userlow)) {
     let response = await handler(command, client, context)
     if(!response) { return }
     sendReply(response.reply)
   }
-  else { client.me(channel, `It's not ready yet! PunOko`) }
 })
