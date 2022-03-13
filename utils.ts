@@ -1,4 +1,5 @@
 import fs from 'fs-extra'
+import TwitchApi from "node-twitch"
 import humanizeDuration from "humanize-duration"
 import { performance } from 'perf_hooks'
 const nodeFetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args))
@@ -6,6 +7,13 @@ import dateFormat, { masks } from "dateformat"
 import isoConv from 'iso-language-converter'
 import Database from "@replit/database"
 const db = new Database()
+
+const twitch = new TwitchApi({
+  client_id: process.env.TWITCH_CLIENT_ID,
+  client_secret: process.env.TWITCH_CLIENT_SECRET,
+  access_token: process.env.ACCESS_TOKEN,
+  scopes: []
+});
 
 const formatDelta = (date) => {
   return humanizeDuration(new Date(date) - new Date(), { round: true, largest: 2 })
@@ -66,7 +74,8 @@ const formatDate = (date, options) => {
 exports.formatDate = formatDate
 
 const addHours = (date, hours) => {
-  return new Date(new Date(date).setHours(date.getHours() + hours))
+  date = new Date(date)
+  return new Date(date.setHours(date.getHours() + hours))
 }
 exports.addHours = addHours
 
@@ -113,3 +122,8 @@ const capitalizeEachWord = (str) => {
   return splitStr.join(' ')
 }
 exports.capitalizeEachWord = capitalizeEachWord
+
+const streamDetails = async (user) => {
+  return await twitch.getStreams({ channel: user })
+}
+exports.streamDetails = streamDetails

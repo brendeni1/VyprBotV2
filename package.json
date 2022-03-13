@@ -8,6 +8,7 @@
     "humanize-duration": "^3.27.1",
     "iso-language-converter": "^1.1.0",
     "node-fetch": "^3.2.2",
+    "node-twitch": "^0.4.5",
     "wikipedia": "^1.1.7"
   }
 }
