@@ -7,7 +7,7 @@ module.exports = async (client, context) => {
     let [hidden, user, channel, subStatus, subType, subTier, giftData, months, streak] = [subDetails.hidden, subDetails.username, subDetails.channel, subDetails.subscribed, subDetails.meta.type, subDetails.meta.tier, subDetails.meta.gift, subDetails.cumulative.months, subDetails.streak.months]
     let remainingOnActiveSub = utils.formatDelta(subDetails.meta.endsAt)
     let timeSinceSubEnded = utils.formatDelta(subDetails.cumulative.end)
-    var address = targetUser == context.user ? { pronoun: 'You', determiner: 'Your', name: `You`, verb: 'have', verb2: 'are', idiom: "aren't" } : { pronoun: 'They', determiner: 'Their', name: `@${user}`, verb: 'has', verb2: 'is', idiom: "isn't" }
+    const address = targetUser == context.user ? { pronoun: 'You', determiner: 'Your', name: `You`, verb: 'have', verb2: 'are', idiom: "aren't" } : { pronoun: 'They', determiner: 'Their', name: `@${user}`, verb: 'has', verb2: 'is', idiom: "isn't" }
     if (hidden) {
       let userData = await utils.fetch(`https://api.ivr.fi/v2/twitch/user/${targetChannel}`)
       if(!userData.roles.isAffiliate && !userData.roles.isPartner && !userData.roles.isStaff) { return { success: false, reply: `@${channel} is not an affiliate!` } }
