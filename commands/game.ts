@@ -33,7 +33,7 @@ module.exports = async (client, context) => {
         }
       }
       game = streamData.game_name
-      user_login = streamData.user_login
+      user_login = streamData.user_name
     }
     else {
       game = context.args.join(' ')
@@ -56,10 +56,11 @@ module.exports = async (client, context) => {
     let gameDetails = await steam.getGameDetails(id)
     game = gameDetails.name
     const [price, age] = [gameDetails.price_overview ? gameDetails.is_free ? 'is free-to-play' : `costs ${gameDetails.price_overview.final_formatted}` : '', gameDetails.required_age > 0 ?  'Rated ' + gameDetails.required_age + '+.' : '']
-    const releaseDate = gameDetails.release_date.coming_soon ? gameDetails.release_date.date == 'TBA' ? 'Release is to be announced.' : `Releases on ${gameDetails.release_date.date} (in ${utils.formatDelta(gameDetails.release_date.date)})` : `Released on ${gameDetails.release_date.date} (${utils.formatDelta(gameDetails.release_date.date)} ago)`
+    const releaseDate = gameDetails.release_date.coming_soon ? gameDetails.release_date.date == 'TBA' ? 'Release is to be announced.' : `Releases on ${utils.formatDate(gameDetails.release_date.date, 'longDate')} (in ${utils.formatDelta(gameDetails.release_date.date)})` : `Released on ${utils.formatDate(gameDetails.release_date.date, 'longDate')} (${utils.formatDelta(gameDetails.release_date.date)} ago)`
+    const channelString = channel ? `${user_login}'s game,` : ''
     return {
       success: true,
-      reply: `${game} ${price} on Steam. ${age} ${releaseDate} Game link: https://store.steampowered.com/app/${id}`
+      reply: `${channelString} ${game} ${price} on Steam. ${age} ${releaseDate} Game link: https://store.steampowered.com/app/${id}`
     }
   } catch (e) {
     return {
