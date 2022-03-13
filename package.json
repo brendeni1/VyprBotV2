@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@replit/database": "^2.0.1",
+    "appid": "^1.0.3",
     "dank-twitch-irc": "^4.3.0",
     "dateformat": "^4.6.3",
     "directory-import": "^2.3.1",
@@ -9,6 +10,7 @@
     "iso-language-converter": "^1.1.0",
     "node-fetch": "^3.2.2",
     "node-twitch": "^0.4.5",
+    "steamapi": "^2.2.0",
     "wikipedia": "^1.1.7"
   }
 }

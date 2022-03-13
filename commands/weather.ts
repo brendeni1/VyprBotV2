@@ -37,7 +37,7 @@ module.exports = async (client, context) => {
   else {
     location = encodeURIComponent(context.args.join(' '))
   }
-  if (!location) {
+  if (!location || location == 'null') {
     return {
       success: false,
       reply: `${address.pronoun} don't have a location set! Set it with: "${context.prefix}set location {location}"`

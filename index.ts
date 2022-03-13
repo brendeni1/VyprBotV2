@@ -148,8 +148,4 @@ client.on("PRIVMSG", async (msg) => {
     if(!response) { return }
     sendReply(response.reply)
   }
-  else{
-    console.log(command)
-    console.log(cooldown.commandCheck(userlow))
-  }
 })

@@ -5,7 +5,7 @@ module.exports = async (client, context) => {
   try {
     const channelData = await utils.fetch(`https://api.ivr.fi/v2/twitch/user/${targetChannel}`)
     let streamData = await utils.streamDetails(targetChannel)
-    if(!streamData.data[0]) {
+    if (!streamData.data[0]) {
       lastStream = channelData.lastBroadcast.startedAt ? `Last streamed ${utils.formatDelta(channelData.lastBroadcast.startedAt)} ago (${utils.formatDate(channelData.lastBroadcast.startedAt, 'paddedShortDate')})` : 'User has never streamed.'
       lastStreamTitle = channelData.lastBroadcast.title ? `Title: ${channelData.lastBroadcast.title}` : 'User has no set title.'
       return {
@@ -23,7 +23,7 @@ module.exports = async (client, context) => {
       reply: `${streamData.user_login} is ${type} ${game} to ${streamData.viewer_count} viewers. Their title is: ${title} and they have been streaming for ${duration}.`
     }
   }
-  catch(e) {
+  catch (e) {
     return {
       success: false,
       reply: e
