@@ -2,18 +2,54 @@ import utils from '../utils'
 
 module.exports = async (client, context) => {
   const hourCheck = context.args.join(' ').match(/hour(\+)(\d+)/i)
-  var hour = null
-  if (hourCheck) { hour = +hourCheck[2]; context.args.splice(context.args.indexOf(hourCheck[0]), 1) }
-  if(hour && hour > 47) { return { success: false, reply: `You can only look up to 47 hours into the forecast.` } }
-  if(hour == 0) { return { success: false, reply: `Weather history is not currently supported!` } }
+  const hour = hourCheck ? +hourCheck[2] - 1 : null
+  if (hourCheck) {
+    context.args.splice(context.args.indexOf(hourCheck[0]), 1)
+  }
+  if (hour && hour > 48) {
+    return {
+      success: false,
+      reply: `You can only look up to 48 hours into the forecast.`
+    }
+  }
+  if (hour && hour < 0) {
+    return {
+      success: false,
+      reply: `Weather history is not currently supported!`
+    }
+  }
   var location
   var address
-  if(!context.args[0]) { address = { pronoun: 'You', determiner: 'your' }; location = encodeURIComponent(await utils.getData(`${context.user}Location`)) }
-  else if(context.args[0].startsWith('@')) { address = { pronoun: 'They', determiner: 'their' }; location = encodeURIComponent(await utils.getData(`${context.args[0].toLowerCase().replace('@', '')}Location`)) }
-  else { location = encodeURIComponent(context.args.join(' ')) }
-  if(!location || location == 'null') { return { success: false, reply: `${address.pronoun} don't have a location set! Set it with: "${context.prefix}set location {location}"` } }
-  coordinates = await utils.fetch(`https://geocode.search.hereapi.com/v1/geocode?q=${location}&apiKey=${process.env['GEOCODING_KEY']}`)
-  if (!coordinates.items[0]) { return { success: false, reply: `The location provided to the API was invalid.` } }
+  if (!context.args[0]) {
+    address = {
+      pronoun: 'You',
+      determiner: 'your'
+    }
+    location = encodeURIComponent(await utils.getData(`${context.user}Location`))
+  }
+  else if (context.args[0].startsWith('@')) {
+    address = {
+      pronoun: 'They',
+      determiner: 'their'
+    } 
+    location = encodeURIComponent(await utils.getData(`${context.args[0].toLowerCase().replace('@', '')}Location`))
+  }
+  else {
+    location = encodeURIComponent(context.args.join(' '))
+  }
+  if (!location) {
+    return {
+      success: false,
+      reply: `${address.pronoun} don't have a location set! Set it with: "${context.prefix}set location {location}"`
+    }
+  }
+  const coordinates = await utils.fetch(`https://geocode.search.hereapi.com/v1/geocode?q=${location}&apiKey=${process.env['GEOCODING_KEY']}`)
+  if (!coordinates.items[0]) {
+    return {
+      success: false,
+      reply: `The location provided to the API was invalid.`
+    }
+  }
   location = coordinates.items[0].title
   let [latitude, longitude] = [coordinates.items[0].position.lat, coordinates.items[0].position.lng]
   weather = await utils.fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=daily&units=metric&appid=${process.env['WEATHER_KEY']}`)
@@ -24,7 +60,7 @@ module.exports = async (client, context) => {
   let [feelsLikeCelcius, feelsLikeFahrenheit] = [(+weather.feels_like).toFixed(1), (+weather.feels_like * 1.8 + 32).toFixed(1)]
   let [windSpeed, windGust] = [(+weather.wind_speed * 3.6).toFixed(1), (+weather.wind_gust * 3.6).toFixed(1)]
   let [humidity, clouds] = [+weather.humidity, +weather.clouds]
-  let [sunrise, sunset, currentTime, timeOffset] = [new Date(+weather.sunrise * 1000), new Date(+weather.sunset * 1000), new Date(), hourCheck ? `(+${hour} hour${hour>1?'s':''})` : '(Now)']
+  let [sunrise, sunset, currentTime, timeOffset] = [new Date(+weather.sunrise * 1000), new Date(+weather.sunset * 1000), new Date(), hourCheck ? `(+${hour} hour${hour > 1 ? 's' : ''})` : '(Now)']
   let weatherAlert = alerts ? alerts[0].event + ' ⚠️' : 'None'
   windGust = isNaN(windGust) ? 'No wind gust data. 💨' : `with wind gusts of up to ${windGust} km/h. 💨`
   let precipitation = () => {
@@ -92,5 +128,8 @@ module.exports = async (client, context) => {
     clouds: clouds + '% ☁️',
     weatherAlert: weatherAlert
   }
-    return { success: true, reply: `${weatherObj.location} ${timeOffset} ${weatherObj.temp.c} (${weatherObj.temp.f}) feels like ${weatherObj.temp.fC} (${weatherObj.temp.fF}) ${weatherObj.condition} ${weatherObj.precipitation} The wind speed is ${weatherObj.wind.speed}, ${weatherObj.wind.gust} ${!hour ? weatherObj.sun: ''} Humidity: ${weatherObj.humidity} Cloud Coverage: ${weatherObj.clouds} Alert: ${weatherObj.weatherAlert}` }
+  return {
+    success: true,
+    reply: `${weatherObj.location} ${timeOffset} ${weatherObj.temp.c} (${weatherObj.temp.f}) feels like ${weatherObj.temp.fC} (${weatherObj.temp.fF}) ${weatherObj.condition} ${weatherObj.precipitation} The wind speed is ${weatherObj.wind.speed}, ${weatherObj.wind.gust} ${!hour ? weatherObj.sun : ''} Humidity: ${weatherObj.humidity} Cloud Coverage: ${weatherObj.clouds} Alert: ${weatherObj.weatherAlert}`
+  }
 }

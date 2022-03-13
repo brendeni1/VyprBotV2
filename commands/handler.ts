@@ -5,6 +5,7 @@ import utils from '../utils'
 
 module.exports = async (command, client, context) => {
   if(command == 'followage') { command = 'fa' }
+  if(command == 'birthday') { command = 'bday' }
   if(command == 'subage') { command = 'sa' }
   command = command.toLowerCase() + '.js'
   let commandCheck = (await fs.readdir(__dirname)).indexOf(command)

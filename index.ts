@@ -85,7 +85,7 @@ client.on("PRIVMSG", async (msg) => {
     client.privmsg(channel, `js`)
   }
 
-  if (/@?vyprbot\sprefix/i.test(message)) {
+  if (/@?vyprbot,?\sprefix(\?)?/i.test(message)) {
     client.me(channel, `${user} --> The prefix for this channel is: "${prefix.trim()}"`)
   }
 
