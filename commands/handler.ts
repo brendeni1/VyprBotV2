@@ -8,6 +8,7 @@ module.exports = async (command, client, context) => {
   if(command == 'stream') { command = 'si' }
   if(command == 'birthday') { command = 'bday' }
   if(command == 'subage') { command = 'sa' }
+  if(command == 'steam') { command = 'game' }
   command = command.toLowerCase() + '.js'
   let commandCheck = (await fs.readdir(__dirname)).indexOf(command)
   if(commandCheck == -1 || command == 'handler.js') { return null }

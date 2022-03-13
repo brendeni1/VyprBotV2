@@ -29,7 +29,7 @@ module.exports = async (client, context) => {
       if (blacklistedGames.indexOf(streamData.game_name) != -1) {
         return {
           success: false,
-          reply: `"${streamData.game_name}" is blacklisted because it's a category, not a game.`
+          reply: `"${streamData.game_name}" is blacklisted because It's a category, not a game.`
         }
       }
       game = streamData.game_name
