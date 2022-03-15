@@ -15,7 +15,7 @@ module.exports = async (client, context) => {
     if (userData.roles.isStaff) { roles.push('Staff') }
     if (userData.verifiedBot) { roles.push('Verified-Bot') }
     if (!userData.roles.isAffiliate && !userData.roles.isPartner && !userData.roles.isStaff && !userData.verifiedBot) { roles.push('No Roles') }
-    if (userData.banned) { uid = userData.id + " ( ⛔ Banned User ⛔ )" }
+    const bannedUser = userData.banned ? `true, ${userData.banReason}` : 'false'
     let obj = {
       banned: userData.banned,
       followers: userData.followers,
@@ -30,7 +30,7 @@ module.exports = async (client, context) => {
       creationDate: creationDate,
       timeSinceCreation: timeSinceCreation,
     }
-    return { success: true, obj, reply: `Display Name: @${obj.name} | Banned: ${obj.banned} | UID: ${obj.uid} | Created: ${obj.creationDate} (${obj.timeSinceCreation} ago) | Followers: ${obj.followers} | Colour: ${obj.colour ?? '(No Colour Set)'} | Bio: ${obj.bio ?? '(No Bio Set)'} | Profile Picture: ${obj.pfp} | Roles: ${obj.roles}` }
+    return { success: true, obj, reply: `Display Name: @${obj.name} | Banned: ${bannedUser} | UID: ${obj.uid} | Created: ${obj.creationDate} (${obj.timeSinceCreation} ago) | Followers: ${obj.followers} | Colour: ${obj.colour ?? '(No Colour Set)'} | Bio: ${obj.bio ?? '(No Bio Set)'} | Profile Picture: ${obj.pfp} | Roles: ${obj.roles}` }
   } catch (err) {
     return { success: false, reply: err }
   }

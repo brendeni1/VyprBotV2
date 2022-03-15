@@ -56,7 +56,7 @@ const fetch = async (url, headers, format) => {
   format = format ? format : 'json'
   const response = await nodeFetch(url, headers)
   if (!response.ok) {
-    throw Error(response.statusText)
+    throw `Error: ${response.statusText}`
   }
   return await response[format]()
 }
@@ -123,7 +123,7 @@ const capitalizeEachWord = (str) => {
 }
 exports.capitalizeEachWord = capitalizeEachWord
 
-const streamDetails = async (user) => {
-  return await twitch.getStreams({ channel: user })
+const streamDetails = async (channel) => {
+  return await twitch.getStreams({ channel: channel })
 }
 exports.streamDetails = streamDetails
