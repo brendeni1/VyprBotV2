@@ -5,7 +5,10 @@ const db = new Database()
 import wiki from 'wikipedia'
 import handler from './commands/handler'
 import cooldown from './cooldown'
+import utils from './utils'
 import { ChatClient, AlternateMessageModifier, SlowModeRateLimiter, IgnoreUnhandledPromiseRejectionsMixin } from "dank-twitch-irc"
+import express from "express"
+var app = express()
 let client = new ChatClient({
 
   username: process.env.TWITCH_USERNAME,
@@ -23,7 +26,7 @@ let client = new ChatClient({
     type: "websocket",
     secure: true,
   },
-});
+})
 
 client.use(new SlowModeRateLimiter(client))
 client.use(new AlternateMessageModifier(client))
@@ -53,7 +56,7 @@ client.on("PRIVMSG", async (msg) => {
   
   // Basic User Info
   
-  let [user, userlow, channel, message] = [msg.displayName, msg.senderUsername, msg.channelName, msg.messageText.replace(' 󠀀', '')]
+  let [user, userlow, channel, message] = [msg.displayName, msg.senderUsername, msg.channelName, msg.messageText.replace(' 󠀀', '').replace('󠀀', '')]
   
   console.log(`[#${channel}] ${user} (${userlow}): ${message}`)
 
@@ -132,8 +135,8 @@ client.on("PRIVMSG", async (msg) => {
   
   let sendReply = (reply) => {
     try {
-      regex = new RegExp(process.env.BAD_WORD_REGEX)
-      reply = regex.test(reply) ? `panicBasket Bad Word Detected panicBasket` : `${user} --> ${reply}`
+      let regex = new RegExp(process.env.BAD_WORD_REGEX)
+      reply = regex.test(reply) ? `panicBasket Bad Word Detected panicBasket` : `${user} --> ${reply.replace(/\n|\r/gim, '')}`
       reply = reply.length > 490 ? reply.slice(0, 490) + "..." : reply
       client.me(channel, reply)
     }catch(e) {
@@ -148,4 +151,23 @@ client.on("PRIVMSG", async (msg) => {
     if(!response) { return }
     sendReply(response.reply)
   }
+})
+
+// API
+
+app.listen(8080, () => {
+ console.log("API online!")
+})
+
+app.get("/api/nammers", async (req, res) => {
+  if(!req.query.user) {
+    return res.status(400).send({statusCode: 400, error: `No user provided.` })
+  }
+  const user = req.query.user.toLowerCase().replace(/@/g, '')
+  let nammers = await utils.getData(`${user}Nammers`)
+  if(!nammers || nammers == 'null') {
+    return res.status(404).send({statusCode: 404, error: `No user found.` })
+  }
+  let response = {statusCode: 200, user: user, date: new Date().toISOString(), nammers: +nammers }
+  return res.status(200).send(response)
 })
