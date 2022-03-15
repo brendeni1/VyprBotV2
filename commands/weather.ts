@@ -60,7 +60,7 @@ module.exports = async (client, context) => {
   let [feelsLikeCelcius, feelsLikeFahrenheit] = [(+weather.feels_like).toFixed(1), (+weather.feels_like * 1.8 + 32).toFixed(1)]
   let [windSpeed, windGust] = [(+weather.wind_speed * 3.6).toFixed(1), (+weather.wind_gust * 3.6).toFixed(1)]
   let [humidity, clouds] = [+weather.humidity, +weather.clouds]
-  let [sunrise, sunset, currentTime, timeOffset] = [new Date(+weather.sunrise * 1000), new Date(+weather.sunset * 1000), new Date(), hourCheck ? `(+${hour} hour${hour > 1 ? 's' : ''})` : '(Now)']
+  let [sunrise, sunset, currentTime, timeOffset] = [new Date(+weather.sunrise * 1000), new Date(+weather.sunset * 1000), new Date(), hourCheck ? `(+${hour+1} hour${hour > 1 ? 's' : ''})` : '(Now)']
   let weatherAlert = alerts ? alerts[0].event + ' ⚠️' : 'None'
   windGust = isNaN(windGust) ? 'No wind gust data. 💨' : `with wind gusts of up to ${windGust} km/h. 💨`
   let precipitation = () => {

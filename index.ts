@@ -135,12 +135,13 @@ client.on("PRIVMSG", async (msg) => {
   
   let sendReply = (reply) => {
     try {
+      reply = String(reply)
       let regex = new RegExp(process.env.BAD_WORD_REGEX)
       reply = regex.test(reply) ? `panicBasket Bad Word Detected panicBasket` : `${user} --> ${reply.replace(/\n|\r/gim, '')}`
       reply = reply.length > 490 ? reply.slice(0, 490) + "..." : reply
       client.me(channel, reply)
     }catch(e) {
-      client.me(channel, `${user} --> Twitch is dogshit and broken, please re-execute the command you just did!`)
+      client.me(channel, `${user} --> ${e}`)
     }
   }
   
