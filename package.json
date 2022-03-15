@@ -9,6 +9,7 @@
     "fs-extra": "^10.0.1",
     "humanize-duration": "^3.27.1",
     "iso-language-converter": "^1.1.0",
+    "moment": "^2.29.1",
     "node-fetch": "^3.2.2",
     "node-twitch": "^0.4.5",
     "steamapi": "^2.2.0",
