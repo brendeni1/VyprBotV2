@@ -160,7 +160,7 @@ app.listen(8080, () => {
  console.log("API online!")
 })
 
-app.get("/api/nammers", async (req, res) => {
+app.get("/nammers", async (req, res) => {
   if(!req.query.user) {
     return res.status(400).send({statusCode: 400, error: `No user provided.` })
   }

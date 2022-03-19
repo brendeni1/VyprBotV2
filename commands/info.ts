@@ -14,7 +14,7 @@ module.exports = async (client, context) => {
     if (userData.roles.isPartner) { roles.push('Partner') }
     if (userData.roles.isStaff) { roles.push('Staff') }
     if (userData.verifiedBot) { roles.push('Verified-Bot') }
-    if (!userData.roles.isAffiliate && !userData.roles.isPartner && !userData.roles.isStaff && !userData.verifiedBot) { roles.push('No Roles') }
+    if (!userData.roles.isAffiliate && !userData.roles.isPartner && !userData.roles.isStaff && !userData.verifiedBot) { roles.push('(No Roles)') }
     const bannedUser = userData.banned
     const banReason = userData.banned
       ? userData.banReason

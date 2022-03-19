@@ -34,8 +34,10 @@ module.exports = async (client, context) => {
   }
   client.join(target)
   client.me(target, `I have temporarily joined this channel for ${Math.round(from/1000)} seconds.`)
+  client.me(context.channel, `Joined #${target} for ${Math.round(from/1000)} seconds.`)
   setTimeout(() => {
     client.me(target, `ppPoof 👋`)
+    client.me(context.channel, `ppPoof left #${target}`)
     client.part(target)
   }, from)
 }
