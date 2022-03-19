@@ -55,7 +55,7 @@ module.exports = async (client, context) => {
     id = id[0].appid
     let gameDetails = await steam.getGameDetails(id)
     game = gameDetails.name
-    const [price, age] = [gameDetails.price_overview ? gameDetails.is_free ? 'is free-to-play' : `costs ${gameDetails.price_overview.final_formatted}` : '', gameDetails.required_age > 0 ?  'Rated ' + gameDetails.required_age + '+.' : '']
+    const [price, age] = [gameDetails.price_overview ? gameDetails.is_free ? 'is free-to-play' : `costs ${gameDetails.price_overview.final_formatted}` : '', gameDetails.required_age > 0 ? 'Rated ' + gameDetails.required_age + '+.' : '']
     const releaseDate = gameDetails.release_date.coming_soon ? gameDetails.release_date.date == 'TBA' ? 'Release is to be announced.' : `Releases on ${utils.formatDate(gameDetails.release_date.date, 'longDate')} (in ${utils.formatDelta(gameDetails.release_date.date)})` : `Released on ${utils.formatDate(gameDetails.release_date.date, 'longDate')} (${utils.formatDelta(gameDetails.release_date.date)} ago)`
     const channelString = channel ? `${user_login}'s game,` : ''
     return {

@@ -127,3 +127,8 @@ const streamDetails = async (channel) => {
   return await twitch.getStreams({ channel: channel })
 }
 exports.streamDetails = streamDetails
+
+const topGames = async (channel) => {
+  return twitch.getTopGames()
+}
+exports.topGames = topGames
