@@ -4,7 +4,7 @@ import fs from 'fs-extra'
 module.exports = async (client, context) => {
   if (context.args[0] == 'all' && await utils.checkAdmin(context.user)) {
     let suggestions = fs.readdirSync('suggestions/active').join(', ')
-    suggestions = suggestions.length == 0 ? 'None' : suggestions.replace(/.json/g, '')
+    suggestions = suggestions.length == 0 ? '(None)' : suggestions.replace(/.json/g, '')
     return {
       success: true,
       reply: `Active Suggestions: ${suggestions}`
