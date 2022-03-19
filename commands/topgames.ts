@@ -14,6 +14,12 @@ module.exports = async (client, context) => {
   }
   try {
     let topGames = await utils.topGames()
+    if(!topGames.data[0]) {
+      return {
+        success: false,
+        reply: `The Twitch API isn't functioning correctly. Try again later.`
+      }
+    }
     let gamesArray = []
     topGames = topGames.data.forEach(gameDetails => gamesArray.push(gameDetails.name))
     gamesArray = gamesArray.slice(0, top)
