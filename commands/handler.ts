@@ -7,6 +7,7 @@ module.exports = async (command, client, context) => {
   if(command == 'followage') { command = 'fa' }
   if(command == 'stream') { command = 'si' }
   if(command == 'birthday') { command = 'bday' }
+  if(command == 'top') { command = 'topstreams' }
   if(command == 'subage') { command = 'sa' }
   if(command == 'steam') { command = 'game' }
   command = command.toLowerCase() + '.js'

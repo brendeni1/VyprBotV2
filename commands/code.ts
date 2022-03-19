@@ -9,12 +9,12 @@ module.exports = async (client, context) => {
 		}
 	}
 	let command = context.args[0].toLowerCase() + '.js'
-	if (command == 'followage.js') {
-		command = 'fa.js'
-	}
-	if (command == 'subage.js') {
-		command = 'sa.js'
-	}
+  if(command == 'followage') { command = 'fa' }
+  if(command == 'stream') { command = 'si' }
+  if(command == 'birthday') { command = 'bday' }
+  if(command == 'top') { command = 'topstreams' }
+  if(command == 'subage') { command = 'sa' }
+  if(command == 'steam') { command = 'game' }
 	let commandCheck = (await fs.readdir(__dirname)).indexOf(command)
 	if (commandCheck == -1 || command == 'handler.js' || command == 'template.js') {
 		return {
