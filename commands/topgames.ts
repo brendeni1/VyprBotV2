@@ -19,7 +19,7 @@ module.exports = async (client, context) => {
     gamesArray = gamesArray.slice(0, top)
     return {
       success: true,
-      reply: `The top ${gamesArray.length} game${gamesArray.length > 1 ? 's' : ''} on Twitch right now ${gamesArray.length > 1 ? 'are' : 'is'}: ${gamesArray.join(', ')}`
+      reply: `Top ${gamesArray.length} game${gamesArray.length > 1 ? 's' : ''} on Twitch right now ${gamesArray.length > 1 ? 'are' : 'is'}: ${gamesArray.join(', ')}`
     }
   } catch (e) {
     return {
