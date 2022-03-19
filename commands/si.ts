@@ -18,9 +18,10 @@ module.exports = async (client, context) => {
 		const game = streamData.game_name ? streamData.game_name : '(No Game Set)'
 		const title = streamData.title ? `"${streamData.title}"` : '(No Title Set)'
 		const duration = utils.formatDelta(streamData.started_at, -6)
+    const link = `https://www.twitch.tv/${streamData.user_login}`
 		return {
 			success: true,
-			reply: `${streamData.user_login} is ${type} ${game} to ${streamData.viewer_count} viewers. Their title is: ${title} and they have been streaming for ${duration}.`
+			reply: `${streamData.user_login} is ${type} ${game} to ${streamData.viewer_count} viewers. Their title is: ${title} and they have been streaming for ${duration}. ${link}`
 		}
 	} catch (e) {
 		return {
