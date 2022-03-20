@@ -15,7 +15,7 @@ module.exports = async (client, context) => {
 		}
 	}
 	const silentCheck = context.args.join(' ').match(/silent(:|=)(true|false)/i)
-	silent = silentCheck ? Boolean(silentCheck[2]) : false;
+	let silent = silentCheck ? Boolean(silentCheck[2]) : false;
 	if (silentCheck) {
 		context.args.splice(context.args.indexOf(silentCheck[0]), 1)
 	}
@@ -30,7 +30,7 @@ module.exports = async (client, context) => {
 	await fs.writeFile('db/channels.txt', channels.join(' '))
 	client.join(target)
 	if (!silent) {
-		client.me(target, `Successfully Joined 👋`)
+		client.me(target, `Successfully Joined 👋 Prefix: 'vb'`)
 	}
 	return {
 		success: true,
