@@ -95,10 +95,9 @@ client.on("PRIVMSG", async (msg) => {
   let didAliCallMe12YearsOld = /(you(')?(r)?(e)?)\s(all)?\s(12)/i.test(message) || /(dark)?(v|b)yp(r|a)\s(is|=)\s12((year(s)?|yr(s)))?(old)?/i.test(message) || /(ur)(\sall)?\s12/i.test(message) || /(you|u)\sguys\s(are|are\sall|=)\s12/i.test(message)
 
   if (didAliCallMe12YearsOld && userlow === 'ali2465') {
-    db.get('vypais12').then(vypais12 => {
-      db.set('vypais12', +vypais12 + 1)
-      client.me(channel, `Vypr has been called a 12 year old ${+vypais12 + 1} times. PANIC`)
-    })
+    let ali12 = +await utils.getData('vypais12') + 1
+    client.me(channel, `Vypr has been called a 12 year old ${ali12} times. PANIC`)
+    utils.setData('vypais12', ali12)
   }
 
   if (!message.startsWith(prefix) || userlow === 'vyprbot') {
