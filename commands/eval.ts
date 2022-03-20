@@ -1,4 +1,5 @@
-import utils from '../utils'
+import * as _utils from '../utils'
+const utils = _utils
 
 module.exports = async (client, context) => {
   if(!await utils.checkAdmin(context.user)) { return { success: false, reply: `You don't have permission to use that command! Required: Admin` } }
