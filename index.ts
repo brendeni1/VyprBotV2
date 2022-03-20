@@ -1,8 +1,5 @@
 // require("http").createServer((_, res) => res.end("Alive!")).listen(8080)
 import fs from 'fs-extra'
-import Database from "@replit/database"
-const db = new Database()
-import wiki from 'wikipedia'
 import handler from './commands/handler'
 import cooldown from './cooldown'
 import utils from './utils'
@@ -72,7 +69,7 @@ client.on("PRIVMSG", async (msg) => {
   
   // Prefix
 
-  let prefix = await db.get(`${channel}Prefix`) ?? 'vb '
+  let prefix = await utils.getData(`${channel}Prefix`) ?? 'vb '
   
   // Keywords
 
