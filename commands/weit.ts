@@ -16,30 +16,17 @@ module.exports = async (client, context) => {
   }
 	try {
 		const emoteData = await utils.fetch(`https://api.ivr.fi/v2/twitch/emotes/${query}?id=${String(isEmoteID)}`)
-		if (emoteData.emoteType == 'GLOBALS') {
-			return {
-				success: true,
-				reply: `${emoteData.emoteCode} (ID: ${emoteData.emoteID}) is a ${emoteData.emoteAssetType.toLowerCase()} global Twitch emote. Emote Link: https://static-cdn.jtvnw.net/emoticons/v2/${emoteData.emoteID}/default/dark/3.0`
-			}
-		}
-		if (emoteData.emoteType == 'SUBSCRIPTIONS') {
-			return {
-				success: true,
-				reply: `${emoteData.emoteCode} (ID: ${emoteData.emoteID}) is a ${emoteData.emoteAssetType.toLowerCase()} Tier ${emoteData.emoteTier} subscriber emote to the channel @${emoteData.channelName} ( @${emoteData.channelLogin} ). Emote Link: https://static-cdn.jtvnw.net/emoticons/v2/${emoteData.emoteID}/default/dark/3.0`
-			}
-		}
-		if (emoteData.emoteType == 'FOLLOWER') {
-			return {
-				success: true,
-				reply: `${emoteData.emoteCode} (ID: ${emoteData.emoteID}) is a ${emoteData.emoteAssetType.toLowerCase()} follower emote to the channel @${emoteData.channelName} ( @${emoteData.channelLogin} ). Emote Link: https://static-cdn.jtvnw.net/emoticons/v2/${emoteData.emoteID}/default/dark/3.0`
-			}
-		}
-		if (emoteData.emoteType == 'SMILIES') {
-			return {
-				success: true,
-				reply: `${emoteData.emoteCode} (ID: ${emoteData.emoteID}) is a ${emoteData.emoteAssetType.toLowerCase()} Twitch smiley emote. Emote Link: https://static-cdn.jtvnw.net/emoticons/v2/${emoteData.emoteID}/default/dark/3.0`
-			}
-		}
+    const sourceType = emoteData.emoteType == 'GLOBALS' ? 'global Twitch emote.'
+      : emoteData.emoteType == 'SUBSCRIPTIONS' ? `Tier ${emoteData.emoteTier} subscriber emote to the channel @${emoteData.channelLogin}`
+      : emoteData.emoteType == 'FOLLOWER' ? `follower emote to the channel @${emoteData.channelLogin}`
+      : emoteData.emoteType == 'SMILIES' ? `Twitch smiley emote.`
+      : `(Unknown Emote Type)`
+    const emoteLink = `Emote Link: https://static-cdn.jtvnw.net/emoticons/v2/${emoteData.emoteID}/default/dark/3.0`
+    const authorLink = `Author Emotes Link: https://emotes.raccatta.cc/twitch/${emoteData.channelLogin}`
+    return {
+      success: true,
+      reply: `${emoteData.emoteCode} (ID: ${emoteData.emoteID}) is a ${emoteData.emoteAssetType.toLowerCase()} ${sourceType} ${emoteLink} ${authorLink}`
+    }
 	} catch (err) {
 		return {
 			success: false,
