@@ -4,7 +4,7 @@ module.exports = async (client, context) => {
 	const randInt = utils.randInt(1, 41)
 	return {
 		success: true,
-		reply: questions[randInt]
+		reply: `${questions[randInt]} ${await utils.bestEmote(context.channel, ['Hmm', 'BRUHMM', 'Hmmge', 'KannaPeer', 'KannaHmm', 'NOTED', '💭', '🤔'])}`
 	}
 }
 
