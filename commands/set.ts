@@ -8,7 +8,7 @@ module.exports = async (client, context) => {
 			reply: `Invalid command syntax!. Examples: "${context.prefix}set twitter darkvyprr", "${context.prefix}set birthday 8/14/2005 (mm/dd/yyyy)", "${context.prefix}set prefix !" or "${context.prefix}set location lasalle ontario" ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
-	const [setting, value] = [context.args[0], context.args[1]]
+	let [setting, value] = [context.args[0], context.args[1]]
 	context.args.shift()
 	if (setting == 'twitter') {
 		let account = value.replace('@', '').toLowerCase()
@@ -34,24 +34,26 @@ module.exports = async (client, context) => {
 	}
 	if (setting == 'bday' || setting == 'birthday') {
 		try {
+      value = context.args.join(' ')
 			var compareDate = moment(new Date(value).toISOString())
-			var startDate = moment(new Date("01/12/1940").toISOString())
+			var startDate = moment(new Date().toISOString()).subtract(80, 'years')
 			var endDate = moment(new Date().toISOString())
-			if (!moment(value, 'MM/DD/YYYY', true).isValid() || !compareDate.isBetween(startDate, endDate)) {
+			if (!compareDate.isBetween(startDate, endDate)) {
 				return {
 					success: false,
-					reply: `Invalid Date. Example: "${context.prefix}set birthday 08/14/2005 (mm/dd/yyyy)". ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
+					reply: `Invalid Date. Example: "${context.prefix}set birthday August 14, 2005". ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 				}
 			}
-			utils.setData(`${context.user}Birthday`, value)
+			utils.setData(`${context.user}Birthday`, utils.formatDate(compareDate, 'paddedShortDate'))
 			return {
 				success: false,
 				reply: `Successfully set your birthday to: ${utils.formatDate(value, "fullDate")}!`
 			}
 		} catch (e) {
+      console.log(new Date(value))
 			return {
 				success: false,
-				reply: `Invalid Date. Example: "${context.prefix}set birthday 08/14/2005 (mm/dd/yyyy)". ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
+				reply: `Invalid Date. Example: "${context.prefix}set birthday August 14, 2005". ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 			}
 		}
 	}
