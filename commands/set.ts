@@ -5,7 +5,7 @@ module.exports = async (client, context) => {
 	if (!context.args[0] || !context.args[1]) {
 		return {
 			success: false,
-			reply: `Invalid command syntax!. Examples: "${context.prefix}set twitter darkvyprr", "${context.prefix}set birthday 8/14/2005 (mm/dd/yyyy)", "${context.prefix}set prefix !" or "${context.prefix}set location lasalle ontario"`
+			reply: `Invalid command syntax!. Examples: "${context.prefix}set twitter darkvyprr", "${context.prefix}set birthday 8/14/2005 (mm/dd/yyyy)", "${context.prefix}set prefix !" or "${context.prefix}set location lasalle ontario" ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	const [setting, value] = [context.args[0], context.args[1]]
@@ -23,7 +23,7 @@ module.exports = async (client, context) => {
 		if (location.items.length == 0) {
 			return {
 				success: false,
-				reply: `That location was invalid!`
+				reply: `That location was invalid! ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 			}
 		}
 		utils.setData(`${context.user}Location`, location.items[0].title)
@@ -40,7 +40,7 @@ module.exports = async (client, context) => {
 			if (!moment(value, 'MM/DD/YYYY', true).isValid() || !compareDate.isBetween(startDate, endDate)) {
 				return {
 					success: false,
-					reply: `Invalid Date. Example: "${context.prefix}set birthday 08/14/2005 (mm/dd/yyyy)".`
+					reply: `Invalid Date. Example: "${context.prefix}set birthday 08/14/2005 (mm/dd/yyyy)". ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 				}
 			}
 			utils.setData(`${context.user}Birthday`, value)
@@ -51,7 +51,7 @@ module.exports = async (client, context) => {
 		} catch (e) {
 			return {
 				success: false,
-				reply: `Invalid Date. Example: "${context.prefix}set birthday 08/14/2005 (mm/dd/yyyy)".`
+				reply: `Invalid Date. Example: "${context.prefix}set birthday 08/14/2005 (mm/dd/yyyy)". ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 			}
 		}
 	}
@@ -72,7 +72,7 @@ module.exports = async (client, context) => {
 		}
 		return {
 			success: false,
-			reply: `You don't have the required permission to use that command! Required: Moderator or Above.`
+			reply: `You don't have the required permission to use that command! Required: Moderator or Above. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	if (setting == 'nammers') {
@@ -81,7 +81,7 @@ module.exports = async (client, context) => {
 			if (!/^\d+$/.test(context.args[1])) {
 				return {
 					success: false,
-					reply: `Invalid syntax! Usage: "${context.prefix}set nammers {user} {amount}"`
+					reply: `Invalid syntax! Usage: "${context.prefix}set nammers {user} {amount}" ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 				}
 			}
 			utils.setData(`${user}Nammers`, context.args[1])
@@ -92,11 +92,11 @@ module.exports = async (client, context) => {
 		}
 		return {
 			success: false,
-			reply: `You don't have the required permission to use that command! Required: Admin.`
+			reply: `You don't have the required permission to use that command! Required: Admin. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	return {
 		success: false,
-		reply: `Invalid command syntax!. Examples: "${context.prefix}set twitter darkvyprr", "${context.prefix}set birthday 8/14/2005 (mm/dd/yyyy)", "${context.prefix}set prefix !" or "${context.prefix}set location lasalle ontario"`
+		reply: `Invalid command syntax!. Examples: "${context.prefix}set twitter darkvyprr", "${context.prefix}set birthday 8/14/2005 (mm/dd/yyyy)", "${context.prefix}set prefix !" or "${context.prefix}set location lasalle ontario" ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 	}
 }

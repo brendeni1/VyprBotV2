@@ -5,21 +5,21 @@ module.exports = async (client, context) => {
 	if (!context.args[0] || !/^\d+$/.test(context.args[0])) {
 		return {
 			success: false,
-			reply: `Please provide a valid suggestion ID to unset.`
+			reply: `Please provide a valid suggestion ID to unset. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', '😵', '⛔'])}`
 		}
 	}
 	let id = +context.args[0]
 	if (!await fs.exists(`suggestions/active/${id}.json`)) {
 		return {
 			success: false,
-			reply: `There is no suggestion with that id!`
+			reply: `There is no suggestion with that id! ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', '😵', '⛔'])}`
 		}
 	}
 	let suggestionDetails = await fs.readJson(`suggestions/active/${id}.json`)
 	if (suggestionDetails.user !== context.user && !await utils.checkAdmin(context.user)) {
 		return {
 			success: false,
-			reply: `You don't own that suggestion!`
+			reply: `You don't own that suggestion! ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', '😵', '⛔'])}`
 		}
 	}
 	await fs.writeJson(`suggestions/active/${id}.json`, {
@@ -33,6 +33,6 @@ module.exports = async (client, context) => {
 	await fs.rename(`suggestions/active/${id}.json`, `suggestions/author-dismissed/${id}.json`)
 	return {
 		success: true,
-		reply: `Your suggestion with the ID ${id} was successfully unset.`
+		reply: `Your suggestion with the ID ${id} was successfully unset. ${await utils.bestEmote(context.channel, ['YAAAY', 'NekoProud', 'Swag', 'EZ', 'EZY', '😵', '⛔'])}`
 	}
 }

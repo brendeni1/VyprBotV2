@@ -5,13 +5,13 @@ module.exports = async (client, context) => {
     if ((await client.getMods(context.channel)).indexOf('vyprbot') == -1) {
       return {
         success: false,
-        reply: `I am not a mod in this channel! Please mod me, and try again.`
+        reply: `I am not a mod in this channel! Please mod me, and try again. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
       }
     }
     if (!context.args[0]) {
       return {
         success: false,
-        reply: `Please provide one or more users to ban. They must be space-separated.`
+        reply: `Please provide one or more users to ban. They must be space-separated. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
       }
     }
     for (let i = 0; i < context.args.length; i++) {
@@ -24,7 +24,7 @@ module.exports = async (client, context) => {
   }
   return {
     success: false,
-    reply: `You must be a moderator or the owner of this channel to use this command!`
+    reply: `You must be a moderator or the owner of this channel to use this command! ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
   }
 }
 

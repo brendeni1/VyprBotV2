@@ -5,7 +5,7 @@ module.exports = async (client, context) => {
 	if (!context.args[0]) {
 		return {
 			success: false,
-			reply: `Provide a suggestion for me to read...`
+			reply: `Provide a suggestion for me to read... ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', '😵', '⛔'])}`
 		}
 	}
 	let id = +await utils.getData('suggestion') + 1

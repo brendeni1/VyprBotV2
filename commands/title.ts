@@ -22,7 +22,7 @@ module.exports = async (client, context) => {
 	} catch (e) {
 		return {
 			success: false,
-			reply: e
+			reply: `${e} ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 }

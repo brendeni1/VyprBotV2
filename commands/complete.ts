@@ -5,21 +5,21 @@ module.exports = async (client, context) => {
 	if (!await utils.checkAdmin(context.user)) {
 		return {
 			success: false,
-			reply: `You don't have permission to use that command! Required: Admin`
+			reply: `You don't have permission to use that command! Required: Admin ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	const options = ['approved', 'denied']
 	if (context.args.length < 2 || !/^\d+$/.test(context.args[0]) || options.indexOf(context.args[1]) == -1) {
 		return {
 			success: false,
-			reply: `Invalid Syntax! Example: "${context.prefix}complete {id} {approved|denied} {optional: reason}"`
+			reply: `Invalid Syntax! Example: "${context.prefix}complete {id} {approved|denied} {optional: reason}" ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	let [id, action, reason] = [+context.args[0], context.args[1].toLowerCase(), context.args.slice(2).join(' ') ? context.args.slice(2).join(' ') : '(No reason provided!)']
 	if (!await fs.exists(`suggestions/active/${id}.json`)) {
 		return {
 			success: false,
-			reply: `There is no suggestion with that the ID: ${id} !`
+			reply: `There is no suggestion with that the ID: ${id}! ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	let suggestionDetails = await fs.readJson(`suggestions/active/${id}.json`)

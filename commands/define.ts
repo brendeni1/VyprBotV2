@@ -9,20 +9,20 @@ module.exports = async (client, context) => {
 	if (!context.args[0]) {
 		return {
 			success: false,
-			reply: "Please provide a phrase or word to define!"
+			reply: `Please provide a phrase or word to define! ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	let definition = await utils.fetch(`https://dictionaryapi.com/api/v3/references/collegiate/json/${context.args.join(' ')}?key=${process.env['DICTIONARY_KEY']}`)
 	if (definition.length == 0 || !definition[0].meta) {
 		return {
 			success: false,
-			reply: "dictionaryapi.com does not have a definition for that word!"
+			reply: `dictionaryapi.com does not have a definition for that word! ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	if (index > definition.length - 1) {
 		return {
 			success: false,
-			reply: `The index you specified is larger than the amount of results. Please use an index less than or equal to ${definition.data.length - 1}.`
+			reply: `The index you specified is larger than the amount of results. Please use an index less than or equal to ${definition.data.length - 1}. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	definition = definition[index]

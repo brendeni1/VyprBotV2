@@ -64,7 +64,7 @@ module.exports = async (client, context) => {
 	} catch (err) {
 		return {
 			success: false,
-			reply: err
+			reply: `${err} ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 }

@@ -4,14 +4,14 @@ module.exports = async (client, context) => {
 	if (!context.args[0] || !/(^\d+$)|(^all$)/i.test(context.args[0])) {
 		return {
 			success: false,
-			reply: `Invalid syntax! Usage: "${context.prefix}gamble {number}"`
+			reply: `Invalid syntax! Usage: "${context.prefix}gamble {number}" ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	let [nammers, amount] = [await utils.getData(`${context.user}Nammers`), context.args[0].toLowerCase()]
 	if (!nammers || +nammers == 0) {
 		return {
 			success: false,
-			reply: `You don't have any nammers! Use "${context.prefix}hunt" to get some.`
+			reply: `You don't have any nammers! Use "${context.prefix}hunt" to get some. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	amount = amount == 'all' ? nammers : +amount
@@ -19,7 +19,7 @@ module.exports = async (client, context) => {
 	if (nammers < amount) {
 		return {
 			success: false,
-			reply: `You don't have enough nammers! Use "${context.prefix}hunt" to get some. You have ${nammers} nammers.`
+			reply: `You don't have enough nammers! Use "${context.prefix}hunt" to get some. You have ${nammers} nammers. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	const win = utils.randInt(0, 1) == 0

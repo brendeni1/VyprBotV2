@@ -13,7 +13,7 @@ module.exports = async (client, context) => {
   if (!context.args[0] || !/^\d+$/.test(context.args[0])) {
     return {
       success: false,
-      reply: `Please provide a valid suggestion ID to check.`
+      reply: `Please provide a valid suggestion ID to check. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
     }
   }
   let id = +context.args[0]
@@ -25,14 +25,14 @@ module.exports = async (client, context) => {
   if (!location) {
     return {
       success: false,
-      reply: `There is no suggestion with that id!`
+      reply: `There is no suggestion with that id! ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
     }
   }
   var suggestion = await fs.readJson(`suggestions/${location}/${id}.json`)
   if (suggestion.user != context.user && !await utils.checkAdmin(context.user)) {
     return {
       success: false,
-      reply: `You don't own that suggestion, and can't view it!`
+      reply: `You don't own that suggestion, and can't view it! ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
     }
   }
   const actionDetails = location == 'denied' || location == 'approved' ? suggestion.reason == '' ? `| No reason provided | Action By: ${suggestion.actionBy} |` : `| Reason: ${suggestion.reason} | Action By: ${suggestion.actionBy} |` : `|`

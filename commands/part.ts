@@ -20,14 +20,14 @@ module.exports = async (client, context) => {
 	if (!await utils.checkAdmin(context.user) && context.args[0] && context.args[0].toLowerCase().replace('@', '') != context.channel) {
 		return {
 			success: false,
-			reply: `You don't have permission to leave other people's channels! Required: Admin`
+			reply: `You don't have permission to leave other people's channels! Required: Admin ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	const channels = await utils.getChannels()
 	if (channels.indexOf(target) == -1) {
 		return {
 			success: false,
-			reply: `Channel is not joined!`
+			reply: `Channel is not joined! ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	channels.splice(channels.indexOf(target), 1)

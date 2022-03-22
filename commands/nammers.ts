@@ -5,7 +5,7 @@ module.exports = async (client, context) => {
 	const nammers = await utils.getData(`${target}Nammers`)
 	const address = target == context.user ? {
 		pronoun: `You`,
-		info: `Use "${context.prefix}hunt" to get more.`
+		info: `Use "${context.prefix}hunt" to get more. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 	} : {
 		pronoun: `They`,
 		info: ``
@@ -13,7 +13,7 @@ module.exports = async (client, context) => {
 	if (!nammers || +nammers == 0) {
 		return {
 			success: true,
-			reply: `${address.pronoun} don't have any nammers! ${address.info}`
+			reply: `${address.pronoun} don't have any nammers! ${address.info} ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	return {

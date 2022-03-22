@@ -21,7 +21,7 @@ module.exports = async (client, context) => {
 	if (!location || location == 'null') {
 		return {
 			success: false,
-			reply: `${address.pronoun} don't have a location set! Set it with: "${context.prefix}set location {location}"`
+			reply: `${address.pronoun} don't have a location set! Set it with: "${context.prefix}set location {location}" ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	const coordinates = await utils.fetch(`https://geocode.search.hereapi.com/v1/geocode?q=${location}&apiKey=${process.env['GEOCODING_KEY']}`)
@@ -29,7 +29,7 @@ module.exports = async (client, context) => {
 		return {
 			success: false,
 			case: 'invalid_locaiton',
-			reply: `The location provided to the API was invalid.`
+			reply: `The location provided to the API was invalid. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	location = coordinates.items[0].title

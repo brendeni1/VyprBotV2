@@ -5,7 +5,7 @@ module.exports = async (client, context) => {
 	if (cooldown.huntCheck(context.user)) {
 		return {
 			success: false,
-			reply: `You're on cooldown! Wait 1 hour in between hunting.`
+			reply: `You're on cooldown! Wait 1 hour in between hunting. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	let [nammers, amount] = [await utils.getData(`${context.user}Nammers`), utils.randIntNeg(15, 50)]

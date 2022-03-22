@@ -4,7 +4,7 @@ module.exports = async (client, context) => {
 	if (!context.args[0]) {
 		return {
 			success: false,
-			reply: 'Please provide an emote or emote code/id to look up.'
+			reply: `Please provide an emote or emote code/id to look up. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', '😵', '⛔'])}`
 		}
 	}
   let query = context.args[0]

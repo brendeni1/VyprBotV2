@@ -4,7 +4,7 @@ module.exports = async (client, context) => {
 	if (!context.args[0]) {
 		return {
 			success: false,
-			reply: `Provide a user to lookup!`
+			reply: `Provide a user to lookup! ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	const user = context.args[0] ? context.args[0].toLowerCase().replace('@', '') : context.user

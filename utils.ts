@@ -137,3 +137,76 @@ const topStreams = async () => {
   return await twitch.getStreams()
 }
 exports.topStreams = topStreams
+
+const bestEmote = async (channel, choices) => {
+  if(!Array.isArray(choices)) {
+    throw 'Emote choices must be an array! Format: "utils.bestEmote(channel, [choices])"'
+  }
+  if(choices.length < 2) {
+    throw 'Choices must be an array that has at least 2 elements! Format: "utils.bestEmote(channel, [choices])"'
+  }
+  try {
+    const channelData = await fetch(`https://api.ivr.fi/v2/twitch/user/${channel}`)
+    let ffzEmotes = await nodeFetch(`https://api.betterttv.net/3/cached/frankerfacez/users/twitch/${channelData.id}`)
+    if(!ffzEmotes.ok) {
+      ffzEmotes = null
+    }
+    let bttvEmotes = await nodeFetch(`https://api.betterttv.net/3/cached/users/twitch/${channelData.id}`)
+    if(!bttvEmotes.ok) {
+      bttvEmotes = null
+    }
+    let sevenTVEmotes = await nodeFetch(`https://api.7tv.app/v2/users/${channel}/emotes`)
+    if(!sevenTVEmotes.ok) {
+      sevenTVEmotes = null
+    }
+    if(!ffzEmotes && !bttvEmotes && !sevenTVEmotes) {
+      const emojiCheck = choices.join().match(/(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/gi)
+      return emojiCheck ? randArrayElement(emojiCheck) : ''
+    }
+    if (ffzEmotes) {
+      ffzEmotes = await ffzEmotes.json()
+    }
+    if (bttvEmotes) {
+      bttvEmotes = await bttvEmotes.json()
+      bttvEmotes = bttvEmotes.sharedEmotes.concat(bttvEmotes.channelEmotes)
+    }
+    if (sevenTVEmotes) {
+      sevenTVEmotes = await sevenTVEmotes.json()
+    }
+    
+    let ffzEmotesArray = ffzEmotes ? ffzEmotes.map(emotes => {
+      return emotes.code
+    })
+    : []
+    let bttvEmotesArray = bttvEmotes ? bttvEmotes.map(emotes => {
+      return emotes.code
+    })
+    : []
+    let sevenTVEmotesArray = sevenTVEmotes ? sevenTVEmotes.map(emotes => {
+      return emotes.name
+    })
+    : []
+    let addedEmotes = []
+    ffzEmotes ? addedEmotes.push(ffzEmotesArray) : null
+    bttvEmotes ? addedEmotes.push(bttvEmotesArray) : null
+    sevenTVEmotes ? addedEmotes.push(sevenTVEmotesArray) : null
+    addedEmotes = addedEmotes.flat()
+    let matches = addedEmotes.filter(emote => {
+      return choices.includes(emote)
+    })
+    if(!matches[0]) {
+      const globals = [":tf:", "AngelThump", "ariW", "BroBalt", "bttvNice", "bUrself", "CandianRage", "CiGrip", "ConcernDoge", "cvHazmat", "cvL", "cvMask", "cvR", "D:", "DatSauce", "DogChamp", "DuckerZ", "FeelsAmazingMan", "FeelsBadMan", "FeelsBirthdayMan", "FeelsGoodMan", "FeelsSnowMan", "FeelsSnowyMan", "FireSpeed", "FishMoley", "ForeverAlone", "GabeN", "haHAA", "HailHelix", "Hhhehehe", "IceCold", "KappaCool", "KaRappa", "KKona", "LuL", "monkaS", "NaM", "notsquishY", "PoleDoge", "RarePepe", "RonSmug", "SaltyCorn", "ShoopDaWhoop", "SoSnowy", "SourPls", "SqShy", "TaxiBro", "TwaT", "VapeNation", "VisLaud", "WatChuSay", "Wowee", "WubTF", "AndKnuckles", "BeanieHipster", "BORT", "CatBag", "LaterSooner", "LilZ", "ManChicken", "OBOY", "OiMinna", "YooHoo", "ZliL", "ZrehplaR", "ZreknarF"]
+      matches = globals.filter(emote => {
+        return choices.includes(emote)
+      })
+    }
+    if(!matches[0]) {
+      const emojiCheck = choices.join().match(/(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/gi)
+      return emojiCheck ? randArrayElement(emojiCheck) : ''
+    }
+    return randArrayElement(matches)
+  } catch (e) {
+    throw e
+  }
+}
+exports.bestEmote = bestEmote

@@ -27,12 +27,12 @@ module.exports = async (client, context) => {
 			if (!userData.roles.isAffiliate && !userData.roles.isPartner && !userData.roles.isStaff) {
 				return {
 					success: false,
-					reply: `@${channel} is not an affiliate!`
+					reply: `@${channel} is not an affiliate! ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 				}
 			}
 			return {
 				success: false,
-				reply: `${address.name} ${address.verb} hidden ${address.determiner.toLowerCase()} subscription status!`
+				reply: `${address.name} ${address.verb} hidden ${address.determiner.toLowerCase()} subscription status! ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 			}
 		}
 		if (months == 0) {

@@ -4,13 +4,13 @@ module.exports = async (client, context) => {
   if (!await utils.checkAdmin(context.user)) {
     return {
       success: false,
-      reply: `You don't have permission to use that command! Required: Admin`
+      reply: `You don't have permission to use that command! Required: Admin ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
     }
   }
   if (!context.args[0] || !/^set$|^delete$|^get$|^list$/.test(context.args[0])) {
     return {
       success: false,
-      reply: `Invalid syntax! Usage: "${context.prefix}data {set|delete|get|list}} {data-name} {...}"`
+      reply: `Invalid syntax! Usage: "${context.prefix}data {set|delete|get|list}} {data-name} {...}" ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
     }
   }
   const publicCheck = context.args.join(' ').match(/chat(:|=)(true|false)/i)
@@ -22,7 +22,7 @@ module.exports = async (client, context) => {
     if (!context.args[1] || !context.args[2]) {
       return {
         success: false,
-        reply: `Please provide a key and value. Example: "${context.prefix}data set darkvyprCockSize 12inches" ({key} {value})`
+        reply: `Please provide a key and value. Example: "${context.prefix}data set darkvyprCockSize 12inches" ({key} {value}) ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
       }
     }
     let value = context.args[1]
@@ -37,14 +37,14 @@ module.exports = async (client, context) => {
     if (!context.args[1]) {
       return {
         success: false,
-        reply: `Please provide a key to delete. Example: "${context.prefix}data delete darkvyprCockSize" ({key})`
+        reply: `Please provide a key to delete. Example: "${context.prefix}data delete darkvyprCockSize" ({key}) ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
       }
     }
     let oldData = await utils.getData(context.args[1])
     if (!oldData) {
       return {
         success: false,
-        reply: `There is no data with the name "${context.args[1]}".`
+        reply: `There is no data with the name "${context.args[1]}". ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
       }
     }
     utils.deleteData(context.args[1])
@@ -57,14 +57,14 @@ module.exports = async (client, context) => {
     if (!context.args[1]) {
       return {
         success: false,
-        reply: `Please provide a key to get the value of. Example: "${context.prefix}data delete darkvyprCockSize" ({key})`
+        reply: `Please provide a key to get the value of. Example: "${context.prefix}data delete darkvyprCockSize" ({key}) ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
       }
     }
     let data = await utils.getData(context.args[1])
     if (data == null) {
       return {
         success: true,
-        reply: `There is no data with the name "${context.args[1]}".`
+        reply: `There is no data with the name "${context.args[1]}". ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
       }
     }
     console.log('-----------');
@@ -81,14 +81,14 @@ module.exports = async (client, context) => {
     if (!context.args[1]) {
       return {
         success: false,
-        reply: `Please provide a prefix to search with!`
+        reply: `Please provide a prefix to search with! ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
       }
     }
     let data = await utils.listData(context.args[1])
     if (data[0] == null) {
       return {
         success: true,
-        reply: `There is no data with the prefix "${context.args[1]}".`
+        reply: `There is no data with the prefix "${context.args[1]}". ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
       }
     }
     console.log('-----------');

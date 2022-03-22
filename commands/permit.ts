@@ -4,14 +4,14 @@ module.exports = async (client, context) => {
   if (!await utils.checkAdmin(context.user) && context.user != context.channel) {
     return {
       success: false,
-      reply: `You don't have the required permission to perform that command! Required: Channel Broadcaster or Above.`
+      reply: `You don't have the required permission to perform that command! Required: Channel Broadcaster or Above. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
     }
   }
   const options = ['add', 'remove', 'delete', 'check']
   if (!context.args[0] || options.indexOf(context.args[0]) == -1 || !context.args[1]) {
     return {
       success: false,
-      reply: `Invalid Syntax! Example: "${context.prefix}permit {add|delete|remove|check} {user}"`
+      reply: `Invalid Syntax! Example: "${context.prefix}permit {add|delete|remove|check} {user}" ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
     }
   }
   let permits = await utils.getData(`${context.channel}Permits`)
@@ -24,14 +24,14 @@ module.exports = async (client, context) => {
   if (await utils.checkAdmin(target)) {
     return {
       success: false,
-      reply: 'That user is an admin, you cannot modify their permissions.'
+      reply: `That user is an admin, you cannot modify their permissions. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
     }
   }
   if (action == 'add') {
     if (permits.indexOf(target) != -1) {
       return {
         success: false,
-        reply: 'That user is alredy permitted in this channel!'
+        reply: `That user is alredy permitted in this channel! ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
       }
     }
     permits.push(target)
@@ -45,7 +45,7 @@ module.exports = async (client, context) => {
     if (permits.indexOf(target) == -1) {
       return {
         success: false,
-        reply: 'That user is not permitted in this channel!'
+        reply: `That user is not permitted in this channel! ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
       }
     }
     permits.splice(permits.indexOf(target), 1)
@@ -59,7 +59,7 @@ module.exports = async (client, context) => {
     if (target == context.channel) {
       return {
         success: true,
-        reply: `Channel broadcasters are automatically permitted!`
+        reply: `Channel broadcasters are automatically permitted! ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
       }
     }
     return permits.indexOf(target) == -1 ? {

@@ -4,13 +4,13 @@ module.exports = async (client, context) => {
 	if (!await utils.checkAdmin(context.user)) {
 		return {
 			success: false,
-			reply: `You don't have permission to use that command! Use: "${context.prefix}say {message}" instead. Required: Admin`
+			reply: `You don't have permission to use that command! Use: "${context.prefix}say {message}" instead. Required: Admin ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	if (!context.args[0]) {
 		return {
 			success: false,
-			reply: `Please provide a message to say.`
+			reply: `Please provide a message to say. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	const channelCheck = context.args.join(' ').match(/(in|channel)(:|=)(\w+)/i)

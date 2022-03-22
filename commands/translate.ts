@@ -5,7 +5,7 @@ module.exports = async (client, context) => {
 	if (!context.args[0]) {
 		return {
 			success: false,
-			reply: "Please provide a phrase or word to translate! Example: https://i.darkvypr.com/translate-example.png"
+			reply: `Please provide a phrase or word to translate! Example: https://i.darkvypr.com/translate-example.png ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	const toCheck = context.args.join(' ').match(/to(:|=)([a-zA-Z])+/i)
@@ -32,7 +32,7 @@ module.exports = async (client, context) => {
 	} catch (e) {
 		return {
 			success: true,
-			reply: `${e} | The language you provided was probably not valid! Valid Languages: https://i.darkvypr.com/languages.png`
+			reply: `${e} | The language you provided was probably not valid! Valid Languages: https://i.darkvypr.com/languages.png ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 }

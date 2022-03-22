@@ -4,13 +4,13 @@ module.exports = async (client, context) => {
 	if (!await utils.checkAdmin(context.user)) {
 		return {
 			success: false,
-			reply: `You don't have permission to use that command! Required: Admin`
+			reply: `You don't have permission to use that command! Required: Admin ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	if (!context.args[0] || !context.args[1]) {
 		return {
 			success: false,
-			reply: `Invalid syntax! Usage: "${context.prefix}rename old:{user's old name} new:{user's new name}"`
+			reply: `Invalid syntax! Usage: "${context.prefix}rename old:{user's old name} new:{user's new name}" ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	const [oldCheck, newCheck] = [context.args.join(' ').match(/old(:|=)(\w+)/i), context.args.join(' ').match(/new(:|=)(\w+)/i)]
@@ -26,7 +26,7 @@ module.exports = async (client, context) => {
 	if (!oldData[0]) {
 		return {
 			success: false,
-			reply: `There is no data associated with that account!`
+			reply: `There is no data associated with that account! ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	if (oldBday) {

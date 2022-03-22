@@ -5,13 +5,13 @@ module.exports = async (client, context) => {
 	if (cooldown.cdrCheck(context.user)) {
 		return {
 			success: false,
-			reply: `Your CDR is on cooldown! Wait 2 hours in between resetting.`
+			reply: `Your CDR is on cooldown! Wait 2 hours in between resetting. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	if (!cooldown.huntCheck(context.user)) {
 		return {
 			success: false,
-			reply: `Your hunt is not on cooldown! Use: "${context.prefix}hunt" first.`
+			reply: `Your hunt is not on cooldown! Use: "${context.prefix}hunt" first. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	let nammers = await utils.getData(`${context.user}Nammers`)

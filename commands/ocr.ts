@@ -34,13 +34,13 @@ module.exports = async (client, context) => {
 	if (!context.args[0]) {
 		return {
 			success: false,
-			reply: `Provide an image link, and optionally a source language. Example: "${context.prefix}ocr {image} lang:{language}". Languages: https://i.darkvypr.com/ocr_languages.png`
+			reply: `Provide an image link, and optionally a source language. Example: "${context.prefix}ocr {image} lang:{language}". Languages: https://i.darkvypr.com/ocr_languages.png ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	if (!languages[language] && language != 'eng') {
 		return {
 			success: false,
-			reply: `That wasn't a valid language! List: https://i.darkvypr.com/ocr_languages.png`
+			reply: `That wasn't a valid language! List: https://i.darkvypr.com/ocr_languages.png ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	language != 'eng' ? language = languages[language] : null
@@ -48,7 +48,7 @@ module.exports = async (client, context) => {
 	if (!ocrData.ParsedResults[0]) {
 		return {
 			success: false,
-			reply: `OCR.space couldn't read the text in that image.`
+			reply: `OCR.space couldn't read the text in that image. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	return {

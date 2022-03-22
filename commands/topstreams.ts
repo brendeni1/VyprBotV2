@@ -17,7 +17,7 @@ module.exports = async (client, context) => {
     if(!topStreams.data[0]) {
       return {
         success: false,
-        reply: `The Twitch API isn't functioning correctly. Try again later.`
+        reply: `The Twitch API isn't functioning correctly. Try again later. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
       }
     }
     topStreams = topStreams.data.slice(0, top)
@@ -30,7 +30,7 @@ module.exports = async (client, context) => {
   } catch (e) {
     return {
       success: false,
-      reply: `There was an error getting the top Twitch games! (${e})`
+      reply: `There was an error getting the top Twitch games! (${e}) ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
     }
   }
 }

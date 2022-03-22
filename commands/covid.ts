@@ -21,7 +21,7 @@ module.exports = async (client, context) => {
 	if (!location || location == 'null') {
 		return {
 			success: false,
-			reply: `${address.pronoun} don't have a location set! Set it with: "${context.prefix}set location {location}"`
+			reply: `${address.pronoun} don't have a location set! Set it with: "${context.prefix}set location {location}" ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	try {
@@ -29,7 +29,7 @@ module.exports = async (client, context) => {
 		if (!locationData.items[0]) {
 			return {
 				success: false,
-				reply: `The location provided to the geocoding API was invalid.`
+				reply: `The location provided to the geocoding API was invalid. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 			}
 		}
 		const country = locationData.items[0].address.countryCode
@@ -46,7 +46,7 @@ module.exports = async (client, context) => {
 	} catch (e) {
 		return {
 			success: false,
-			reply: `There was an error getting the COVID-19 data! The country is most likely invalid/not tracked.`
+			reply: `There was an error getting the COVID-19 data! The country is most likely invalid/not tracked. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 }

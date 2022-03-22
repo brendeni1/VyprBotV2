@@ -15,7 +15,7 @@ module.exports = async (client, context) => {
 	if (!bday) {
 		return {
 			success: false,
-			reply: originalUser == context.user ? `Before using this command, you must set your birthday with the "${context.prefix}set birthday" command. It must be in M/D/YYYY or MM/DD/YYYY format. Examples: "${context.prefix}set birthday 8/14/2005", "${context.prefix}set birthday 10/16/2004" or "${context.prefix}set birthday 9/11/1973".` : `That user hasen't set their birthday! Get them to use: "${context.prefix}set bday {mm/dd/yyyy}" and retry this command!`
+			reply: originalUser == context.user ? `Before using this command, you must set your birthday with the "${context.prefix}set birthday" command. It must be in M/D/YYYY or MM/DD/YYYY format. Examples: "${context.prefix}set birthday 8/14/2005", "${context.prefix}set birthday 10/16/2004" or "${context.prefix}set birthday 9/11/1973".` : `That user hasen't set their birthday! Get them to use: "${context.prefix}set bday {mm/dd/yyyy}" and retry this command! ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	let today = utils.formatDate(new Date(), 'paddedShortDate')

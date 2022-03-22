@@ -19,7 +19,7 @@ module.exports = async (client, context) => {
 	if (commandCheck == -1 || command == 'handler.js' || command == 'template.js') {
 		return {
 			success: false,
-			reply: `Please provide a valid command!`
+			reply: `Please provide a valid command! ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	command = command.replace('.js', '.ts')

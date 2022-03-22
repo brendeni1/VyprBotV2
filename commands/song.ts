@@ -4,7 +4,7 @@ module.exports = async (client, context) => {
 	if (!context.args[0]) {
 		return {
 			success: false,
-			reply: `Please provide a song name to look up.`
+			reply: `Please provide a song name to look up. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	const searchInput = context.args.join(' ').match(/index(:|=)(\d+)/i)
@@ -17,13 +17,13 @@ module.exports = async (client, context) => {
 	if (tracks.length == 0) {
 		return {
 			success: false,
-			reply: `No songs could be found using that phrase.`
+			reply: `No songs could be found using that phrase. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	if (index > tracks.length - 1) {
 		return {
 			success: false,
-			reply: `The song index you specified is larger than the amount of results. Please use an index less than or equal to ${tracks.length - 1}.`
+			reply: `The song index you specified is larger than the amount of results. Please use an index less than or equal to ${tracks.length - 1}. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	var flags = []

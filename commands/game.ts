@@ -15,7 +15,7 @@ module.exports = async (client, context) => {
       if (!streamData.data[0]) {
         return {
           success: false,
-          reply: `I can only lookup games for channels that are live!`
+          reply: `I can only lookup games for channels that are live! ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
         }
       }
       streamData = streamData.data[0]
@@ -29,7 +29,7 @@ module.exports = async (client, context) => {
       if (blacklistedGames.indexOf(streamData.game_name) != -1) {
         return {
           success: false,
-          reply: `"${streamData.game_name}" is blacklisted because It's a category, not a game.`
+          reply: `"${streamData.game_name}" is blacklisted because It's a category, not a game. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
         }
       }
       game = streamData.game_name
@@ -49,7 +49,7 @@ module.exports = async (client, context) => {
     if (!id[0]) {
       return {
         success: true,
-        reply: `No Steam data could be found with that name. Try re-formatting or re-phrasing.`
+        reply: `No Steam data could be found with that name. Try re-formatting or re-phrasing. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
       }
     }
     id = id[0].appid

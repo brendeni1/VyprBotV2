@@ -7,13 +7,13 @@ module.exports = async (client, context) => {
 		if (!await utils.checkAdmin(context.user)) {
 			return {
 				success: false,
-				reply: `You don't have permission to use that command! Required: Admin`
+				reply: `You don't have permission to use that command! Required: Admin ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 			}
 		}
 		if (!context.args[0]) {
 			return {
 				success: false,
-				reply: `Invalid syntax! Usage: "${context.prefix}migrate {user}"`
+				reply: `Invalid syntax! Usage: "${context.prefix}migrate {user}" ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 			}
 		}
 		const user = context.args[0].toLowerCase().replace('@', '')
@@ -21,7 +21,7 @@ module.exports = async (client, context) => {
 		if (!oldNammers) {
 			return {
 				success: false,
-				reply: `That user didn't have any nammer data.`
+				reply: `That user didn't have any nammer data. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 			}
 		}
 		utils.setData(`${user}Nammers`, +oldNammers)
@@ -32,7 +32,7 @@ module.exports = async (client, context) => {
 	} catch (e) {
 		return {
 			success: false,
-			reply: `${e}, try refreshing the old database url.`
+			reply: `${e}, try refreshing the old database url. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 }
