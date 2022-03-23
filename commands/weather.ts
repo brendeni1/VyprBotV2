@@ -71,8 +71,11 @@ module.exports = async (client, context) => {
       alerts.forEach(alert => {
         alertArray.push(alert.tags[0] ? alert.tags.join(', ') : alert.event)
       })
+      if(alerts[0].event == 'weather' && /rain(fall)?/.test(alerts[0].description)) {
+        alertArray.push('Flood')
+      }
     }
-    else if (!alerts) {
+    if (!alerts) {
       alertArray.push('(None)')
     }
     windGust = isNaN(windGust) ? 'No wind gust data. 💨' : `with wind gusts of up to ${windGust} km/h. 💨`
