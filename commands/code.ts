@@ -25,6 +25,6 @@ module.exports = async (client, context) => {
 	command = command.replace('.js', '.ts')
 	return {
 		success: true,
-		reply: `Code for "${command.replace('.ts', '')}": https://github.com/DarkVypr/VyprBotV2/blob/main/commands/${command}`
+		reply: `Code for "${command.replace('.ts', '')}": https://github.com/DarkVypr/VyprBotV2/blob/main/commands/${command} ${await utils.bestEmote(context.channel, ['BroBalt', 'YESIDOTHINKSO', 'Swag', 'FeelsGoodMan', 'NOTED', 'HACKERMANS', '💻', '🧠'])}`
 	}
 }

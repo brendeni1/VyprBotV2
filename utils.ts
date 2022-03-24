@@ -62,9 +62,14 @@ const fetch = async (url, headers, format) => {
 }
 exports.fetch = fetch
 
-const fetchPost = async (url, headers, body) => {
-  post = await nodeFetch(url, { method: 'POST' })
-  return await post.json()
+const fetchPost = async (url, format) => {
+  format = format ? format : 'json'
+  const response = await nodeFetch(url, {method: 'POST'})
+  console.log(response)
+  if (!response.ok) {
+    throw `Error: ${response.statusText}`
+  }
+  return await response[format]()
 }
 exports.fetchPost = fetchPost
 
@@ -137,6 +142,16 @@ const topStreams = async () => {
   return await twitch.getStreams()
 }
 exports.topStreams = topStreams
+
+const userExists = async (user) => {
+  try {
+    await fetch(`https://api.ivr.fi/v2/twitch/user/${user}`)
+    return true
+  } catch (e) {
+    return false
+  }
+}
+exports.userExists = userExists
 
 const bestEmote = async (channel, choices) => {
   if(!Array.isArray(choices)) {
