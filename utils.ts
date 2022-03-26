@@ -12,7 +12,7 @@ const twitch = new TwitchApi({
   client_id: process.env.TWITCH_CLIENT_ID,
   client_secret: process.env.TWITCH_CLIENT_SECRET,
   access_token: process.env.ACCESS_TOKEN,
-  scopes: []
+  scopes: ['channel:read:subscriptions']
 });
 
 const formatDelta = (date) => {
@@ -62,11 +62,13 @@ const fetch = async (url, headers, format) => {
 }
 exports.fetch = fetch
 
-const fetchPost = async (url, format) => {
+const fetchPost = async (url, format, headers) => {
   format = format ? format : 'json'
-  const response = await nodeFetch(url, {method: 'POST'})
-  console.log(response)
+  headers = headers ? headers : { method: 'POST' }
+  console.log(headers)
+  const response = await nodeFetch(url, headers)
   if (!response.ok) {
+    console.log(response)
     throw `Error: ${response.statusText}`
   }
   return await response[format]()
