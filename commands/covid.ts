@@ -36,7 +36,7 @@ module.exports = async (client, context) => {
 		const covidStats = await utils.fetch(`https://coronavirus-monitor-v2.p.rapidapi.com/coronavirus/latest_stat_by_country.php?country=${country}`, {
 			"headers": {
 				"x-rapidapi-host": "coronavirus-monitor-v2.p.rapidapi.com",
-				"x-rapidapi-key": process.env['COVID_KEY']
+				"x-rapidapi-key": process.env['RAPID_API_KEY']
 			}
 		})
 		return {
@@ -44,6 +44,7 @@ module.exports = async (client, context) => {
 			reply: `COVID-19 stats for ${covidStats.country} (Updated: ${utils.formatDelta(covidStats.latest_stat_by_country[0].record_date)} ago) | Total Cases: ${covidStats.latest_stat_by_country[0].total_cases} | Total Deaths: ${covidStats.latest_stat_by_country[0].total_deaths} | Total Recoveries: ${covidStats.latest_stat_by_country[0].total_recovered} | New Cases: ${covidStats.latest_stat_by_country[0].new_cases} | New Deaths: ${covidStats.latest_stat_by_country[0].new_deaths} | Critical Condition: ${covidStats.latest_stat_by_country[0].serious_critical} | Total Tested: ${covidStats.latest_stat_by_country[0].total_tests}`
 		}
 	} catch (e) {
+    console.log(e)
 		return {
 			success: false,
 			reply: `There was an error getting the COVID-19 data! The country is most likely invalid/not tracked. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`

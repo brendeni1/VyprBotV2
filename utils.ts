@@ -54,7 +54,8 @@ exports.listData = listData
 
 const fetch = async (url, headers, format) => {
   format = format ? format : 'json'
-  const response = await nodeFetch(url, headers)
+  headers = headers ? headers : { method: 'GET' }
+  const response = await nodeFetch(url, { headers: headers })
   if (!response.ok) {
     throw `Error: ${response.statusText}`
   }
@@ -65,10 +66,8 @@ exports.fetch = fetch
 const fetchPost = async (url, format, headers) => {
   format = format ? format : 'json'
   headers = headers ? headers : { method: 'POST' }
-  console.log(headers)
   const response = await nodeFetch(url, headers)
   if (!response.ok) {
-    console.log(response)
     throw `Error: ${response.statusText}`
   }
   return await response[format]()

@@ -74,7 +74,12 @@ client.on("PRIVMSG", async (msg) => {
 
   // Prefix
 
-  let prefix = await utils.getData(`${channel}Prefix`) ?? 'vb '
+  let prefix
+  try {
+    prefix = await utils.getData(`${channel}Prefix`) ?? 'vb '
+  } catch (e) {
+    client.me(channel, `${user} --> Replit is shit, re-execute that command please!`)
+  }
 
   // Keywords
 

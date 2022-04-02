@@ -31,6 +31,6 @@ module.exports = async (client, context) => {
 	let [cleanDef, cleanExample] = [urbanResult[index].definition.replace(/\[|\]/gim, '').replace(/n:/, '').replace(/\"\r\n\r\n/gim, ' ').replace(/\b\\b/gim, '').replace(/(\r\n|\n|\r)/gim, " "), urbanResult[index].example.replace(/\[|\]/gim, '').replace(/\"\r\n\r\n/gim, ' ').replace(/\b\\b/gim, '').replace(/(\r\n|\n|\r)/gim, " ")]
 	return {
 		success: true,
-		reply: `(${urbanResult.length - index - 1} other definitions) (${urbanResult[index].thumbs_up} upvotes) - ${cleanDef} - Example: ${cleanExample}`
+		reply: `(${urbanResult.length - 1} other definitions) (${urbanResult[index].thumbs_up} upvotes) - ${cleanDef} <--> Example: ${cleanExample}`
 	}
 }
