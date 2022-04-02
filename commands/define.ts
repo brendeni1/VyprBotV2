@@ -48,7 +48,7 @@ module.exports = async (client, context) => {
   	if (urbanResult.length == 0) {
   		return {
   			success: false,
-  			reply: `There was no definition found for that word. Used resources: Urban Dictionary, Wikipedia and https://api-ninjas.com/api/dictionary ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
+  			reply: `There was no definition found for that word. Used resources: Urban Dictionary, Wikipedia and Words API ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
   		}
   	}
   	if (index > urbanResult.length - 1) {
