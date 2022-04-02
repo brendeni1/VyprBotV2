@@ -25,8 +25,9 @@ const formatTime = (date) => {
 }
 exports.formatTime = formatTime
 
-const delta = (date) => {
-  return new Date(date) - new Date()
+const delta = (date, date2) => {
+  date2 = date2 ? new Date(date2) : new Date()
+  return new Date(date) - date2
 }
 exports.delta = delta
 
@@ -226,3 +227,61 @@ const bestEmote = async (channel, choices) => {
   }
 }
 exports.bestEmote = bestEmote
+
+const getChannelEmotes = async (channel) => {
+  if(!channel) {
+    throw 'Please report this error with: "vb suggest *get all channel emotes error, missing channel*"!'
+  }
+  try {
+    const channelData = await fetch(`https://api.ivr.fi/v2/twitch/user/${channel}`)
+    let ffzEmotes = await nodeFetch(`https://api.betterttv.net/3/cached/frankerfacez/users/twitch/${channelData.id}`)
+    if(!ffzEmotes.ok) {
+      ffzEmotes = null
+    }
+    let bttvEmotes = await nodeFetch(`https://api.betterttv.net/3/cached/users/twitch/${channelData.id}`)
+    if(!bttvEmotes.ok) {
+      bttvEmotes = null
+    }
+    let sevenTVEmotes = await nodeFetch(`https://api.7tv.app/v2/users/${channel}/emotes`)
+    if(!sevenTVEmotes.ok) {
+      sevenTVEmotes = null
+    }
+    if(!ffzEmotes && !bttvEmotes && !sevenTVEmotes) {
+      return null
+    }
+    if (ffzEmotes) {
+      ffzEmotes = await ffzEmotes.json()
+    }
+    if (bttvEmotes) {
+      bttvEmotes = await bttvEmotes.json()
+      bttvEmotes = bttvEmotes.sharedEmotes.concat(bttvEmotes.channelEmotes)
+    }
+    if (sevenTVEmotes) {
+      sevenTVEmotes = await sevenTVEmotes.json()
+    }
+    let ffzEmotesArray = ffzEmotes ? ffzEmotes.map(emotes => {
+      return emotes.code
+    })
+    : []
+    let bttvEmotesArray = bttvEmotes ? bttvEmotes.map(emotes => {
+      return emotes.code
+    })
+    : []
+    let sevenTVEmotesArray = sevenTVEmotes ? sevenTVEmotes.map(emotes => {
+      return emotes.name
+    })
+    : []
+    let addedEmotes = []
+    ffzEmotes ? addedEmotes.push(ffzEmotesArray) : null
+    bttvEmotes ? addedEmotes.push(bttvEmotesArray) : null
+    sevenTVEmotes ? addedEmotes.push(sevenTVEmotesArray) : null
+    addedEmotes = addedEmotes.flat()
+    if(!addedEmotes[0]) {
+      return null
+    }
+    return addedEmotes
+  } catch (e) {
+    throw e
+  }
+}
+exports.getChannelEmotes = getChannelEmotes

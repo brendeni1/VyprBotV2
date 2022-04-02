@@ -1,5 +1,7 @@
 import * as _utils from '../utils'
 const utils = _utils
+import * as _humanizeDuration from 'humanize-duration'
+const humanizeDuration = _humanizeDuration
 
 module.exports = async (client, context) => {
   if(!await utils.checkAdmin(context.user)) { return { success: false, reply: `You don't have permission to use that command! Required: Admin ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}` } }

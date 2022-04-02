@@ -10,6 +10,9 @@ module.exports = async (command, client, context) => {
 	if (command == 'stream') {
 		command = 'si'
 	}
+	if (command == 'rem') {
+		command = 'listemotes'
+	}
 	if (command == 'birthday') {
 		command = 'bday'
 	}
