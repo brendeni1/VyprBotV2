@@ -6,6 +6,7 @@ const nodeFetch = (...args) => import('node-fetch').then(({ default: fetch }) =>
 import dateFormat, { masks } from "dateformat"
 import isoConv from 'iso-language-converter'
 import Database from "@replit/database"
+const fuzzySearch = require('fuzzysort')
 const db = new Database()
 
 const twitch = new TwitchApi({
@@ -144,6 +145,26 @@ const topStreams = async () => {
   return await twitch.getStreams()
 }
 exports.topStreams = topStreams
+
+const searchSteam = async (title) => {
+  if (!title) {
+    throw `No steam app name was provided to search with.`
+  }
+  let steamGames = await fetch(`http://api.steampowered.com/ISteamApps/GetAppList/v0002/?key=STEAMKEY&format=json`)
+  steamGames = steamGames.applist.apps
+  let steamGameNames = steamGames.map(i => {
+    return i.name
+  })
+  let games = fuzzySearch.go(title, steamGameNames)
+  if(!games[0] || !games[0].target) {
+    return null
+  }
+  let game = steamGames.find(i => {
+    return i.name == games[0].target
+  })
+  return game
+}
+exports.searchSteam = searchSteam
 
 const userExists = async (user) => {
   try {

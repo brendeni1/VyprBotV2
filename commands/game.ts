@@ -1,7 +1,4 @@
 import utils from '../utils'
-import steamID from 'appid'
-import SteamAPI from 'steamapi'
-const steam = new SteamAPI(process.env.STEAM_API_KEY)
 
 module.exports = async (client, context) => {
   const channelCheck = context.args.join(' ').match(/channel(=|:)(\w+)/i)
@@ -38,29 +35,51 @@ module.exports = async (client, context) => {
     else {
       game = context.args.join(' ')
     }
-    let gameRegex = new RegExp('^' + game + '$', 'i')
-    let id = await steamID(gameRegex)
-    if (!id[0] && channel) {
+    let query = await utils.searchSteam(game)
+    if(!query && channel) {
       return {
         success: true,
         reply: `${user_login} is playing ${game}. No Steam link available.`
       }
     }
-    if (!id[0]) {
+    if (!query) {
       return {
         success: true,
-        reply: `No Steam data could be found with that name. Try re-formatting or re-phrasing. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
+        reply: `No Steam data could be found with that game name. Try re-formatting or re-phrasing. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
       }
     }
-    id = id[0].appid
-    let gameDetails = await steam.getGameDetails(id)
+    let id = String(query.appid).replace(/^413180$|^362003$/, '271590')
+    let gameDetails = await utils.fetch(`https://store.steampowered.com/api/appdetails?appids=${id}`)
+    id = +id
+    if(!gameDetails[id].success) {
+      return {
+        success: false,
+        reply: `No Steam data could be found with that game name. Try re-formatting or re-phrasing. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
+      }
+    }
+    gameDetails = gameDetails[id].data
     game = gameDetails.name
-    const [price, age] = [gameDetails.price_overview ? gameDetails.is_free ? 'is free-to-play' : `costs ${gameDetails.price_overview.final_formatted}` : '', gameDetails.required_age > 0 ? 'Rated ' + gameDetails.required_age + '+.' : '']
-    const releaseDate = gameDetails.release_date.coming_soon ? gameDetails.release_date.date == 'TBA' ? 'Release is to be announced.' : `Releases on ${utils.formatDate(gameDetails.release_date.date, 'longDate')} (in ${utils.formatDelta(gameDetails.release_date.date)})` : `Released on ${utils.formatDate(gameDetails.release_date.date, 'longDate')} (${utils.formatDelta(gameDetails.release_date.date)} ago)`
-    const channelString = channel ? `${user_login}'s game,` : ''
+    const price = gameDetails.price_overview
+      ? gameDetails.is_free
+      ? 'is free-to-play'
+      : `costs ${gameDetails.price_overview.final_formatted}`
+      : ''
+    const age = gameDetails.required_age > 0
+      ? 'Rated ' + gameDetails.required_age + '+.'
+      : 'Rated E for everyone.'
+    const releaseDate = gameDetails.release_date.date
+      ? gameDetails.release_date.coming_soon
+      ? gameDetails.release_date.date == 'TBA'
+      ? 'To Be Announced'
+      : gameDetails.release_date.date
+      : gameDetails.release_date.date
+      : '(No Release Date Provided)'
+    const channelString = channel
+      ? `${user_login}'s game,`
+      : ''
     return {
       success: true,
-      reply: `${channelString} ${game} ${price} on Steam. ${age} ${releaseDate} Game link: https://store.steampowered.com/app/${id}`
+      reply: `${channelString} ${game} ${price} on Steam. ${age} Released/Releasing: ${releaseDate}. Game link: https://store.steampowered.com/app/${id}`
     }
   } catch (e) {
     return {
