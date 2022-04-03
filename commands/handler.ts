@@ -28,13 +28,12 @@ module.exports = async (command, client, context) => {
 	command = command.toLowerCase() + '.js'
 	let commandCheck = (await fs.readdir(__dirname)).indexOf(command)
 	if (commandCheck == -1 || command == 'handler.js') {
-		return null
+		return
 	}
 	const importedModules = importDir()
-	context.user == 'darkvypr' ? null : cooldown.commandAdd(context.user);
-	setTimeout(() => {
-		cooldown.commandDelete(context.user)
-	}, 3000)
+  if(context.user != 'darkvypr') {
+    cooldown.addToCooldown(context.user, 3000)
+  }
 	let usage = await utils.getData('commandUsage');
 	utils.setData("commandUsage", +usage + 1);
 	return await importedModules[`/${command}`](client, context)

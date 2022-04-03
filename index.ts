@@ -39,10 +39,10 @@ client.on("close", (error) => {
   if (error != null) {
     console.error("Client closed due to error", error)
   }
-});
-const channelOptions = fs.readFileSync('./db/channels.txt').toString().split(' ')
+})
 
-client.connect();
+const channelOptions = fs.readFileSync('./db/channels.txt').toString().split(' ')
+client.connect()
 client.joinAll(channelOptions)
 
 // setInterval(function() {
@@ -78,33 +78,44 @@ client.on("PRIVMSG", async (msg) => {
   try {
     prefix = await utils.getData(`${channel}Prefix`) ?? 'vb '
   } catch (e) {
-    client.me(channel, `${user} --> Replit is shit, re-execute that command please!`)
+    client.me(channel, `${user} --> Replit is shit, re-execute that command please!` && !cooldown.commandCheck(userlow))
   }
 
   // Keywords
 
-  if (userlow === 'xenoplopqb' && message.includes('modCheck') && channel === 'darkvypr') {
+  if (userlow === 'xenoplopqb' && message.includes('modCheck') && channel === 'darkvypr' && !cooldown.commandCheck(userlow)) {
     client.privmsg(channel, `modCheck`)
+  	if(userlow != 'darkvypr') {
+      cooldown.addToCooldown(userlow, 3000)
+    }
   }
 
-  if (/NaN/.test(message) && userlow !== 'vyprbot' && channel === 'darkvypr') {
+  if (/\bNaN\b/i.test(message) && userlow !== 'vyprbot' && channel === 'darkvypr' && !cooldown.commandCheck(userlow)) {
     client.privmsg(channel, `NaN`)
+  	if(userlow != 'darkvypr') {
+      cooldown.addToCooldown(userlow, 3000)
+    }
   }
 
-  if (/\bunhandled\s?promise\s?rejection\b/i.test(message) && userlow !== 'vyprbot' && channel === 'darkvypr') {
+  if (/\b(unhandled)?\s?promise\s?rejection\b/i.test(message) && userlow !== 'vyprbot' && channel === 'darkvypr' && !cooldown.commandCheck(userlow)) {
     client.privmsg(channel, `js`)
+  	if(userlow != 'darkvypr') {
+      cooldown.addToCooldown(userlow, 3000)
+    }
   }
 
-  if (/@?vyprbot,?\sprefix(\?)?/i.test(message)) {
+  if (/@?vyprbot,?\sprefix(\?)?/i.test(message) && !cooldown.commandCheck(userlow)) {
     client.me(channel, `${user} --> The prefix for this channel is: "${prefix.trim()}"`)
+  	if(userlow != 'darkvypr') {
+      cooldown.addToCooldown(userlow, 3000)
+    }
   }
 
-  let didAliCallMe12YearsOld = /(you(')?(r)?(e)?)\s(all)?\s(12)/i.test(message) || /(dark)?(v|b)yp(r|a)\s(is|=)\s12((year(s)?|yr(s)))?(old)?/i.test(message) || /(ur)(\sall)?\s12/i.test(message) || /(you|u)\sguys\s(are|are\sall|=)\s12/i.test(message)
-
-  if (didAliCallMe12YearsOld && userlow === 'ali2465') {
-    let ali12 = +await utils.getData('vypais12') + 1
-    client.me(channel, `Vypr has been called a 12 year old ${ali12} times. PANIC`)
-    utils.setData('vypais12', ali12)
+  if (message.startsWith('!ping') && !cooldown.commandCheck(userlow)) {
+    client.me(channel, `${user} --> Use: "${prefix.trim()}" as the prefix for all VyprBot commands in this channel. Example: "${prefix}ping".`)
+  	if(userlow != 'darkvypr') {
+      cooldown.addToCooldown(userlow, 3000)
+    }
   }
 
   if (!message.startsWith(prefix) || userlow === 'vyprbot') {
@@ -143,7 +154,9 @@ client.on("PRIVMSG", async (msg) => {
     try {
       reply = String(reply)
       let regex = new RegExp(process.env.BAD_WORD_REGEX)
-      reply = regex.test(reply) ? `panicBasket Bad Word Detected panicBasket` : `${user} --> ${reply.replace(/\n|\r/gim, '')}`
+      reply = regex.test(reply)
+        ? `panicBasket Bad Word Detected panicBasket`
+        : `${user} --> ${reply.replace(/\n|\r/gim, '')}`
       reply = reply.length > 490 ? reply.slice(0, 490) + "..." : reply
       client.me(channel, reply)
     } catch (e) {

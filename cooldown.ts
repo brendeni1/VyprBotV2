@@ -1,4 +1,4 @@
-const [ huntCooldown, cdrCooldown, commandCooldown ] = [new Set(), new Set(), new Set()]
+const [huntCooldown, cdrCooldown, commandCooldown] = [new Set(), new Set(), new Set()]
 
 // Hunt Command Cooldown
 
@@ -36,17 +36,24 @@ exports.cdrCheck = cdrCheck
 
 // Command Command
 
-const commandAdd = (user) => {
+const addToCooldown = (user, time) => {
+  if (!user || !time) {
+    throw `No ${!user && !time ? 'user or time' : !user ? 'user' : !time ? 'length' : '(unknown)'} was provided for cooldown.`
+  }
+  if (isNaN(time)) {
+    throw `The time provided was not a valid number!`
+  }
   commandCooldown.add(user)
+  setTimeout(() => {
+    commandCooldown.delete(user)
+  }, time)
 }
-exports.commandAdd = commandAdd
-
-const commandDelete = (user) => {
-  commandCooldown.delete(user)
-}
-exports.commandDelete = commandDelete
+exports.addToCooldown = addToCooldown
 
 const commandCheck = (user) => {
+  if (!user) {
+    throw `No user was provided for cooldown!`
+  }
   return commandCooldown.has(user)
 }
 exports.commandCheck = commandCheck
