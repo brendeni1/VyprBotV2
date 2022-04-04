@@ -36,11 +36,17 @@ module.exports = async (client, context) => {
 		try {
 			var compareDate = moment(new Date(value).toISOString())
 			var startDate = moment(new Date().toISOString()).subtract(90, 'years')
-			var endDate = moment(new Date().toISOString())
-			if (!moment(value, 'MM/DD/YYYY', true).isValid() || !compareDate.isBetween(startDate, endDate)) {
+			var endDate = moment(new Date().toISOString()).subtract(13, 'years')
+      if(!moment(value, 'MM/DD/YYYY', true).isValid()) {
 				return {
 					success: false,
-					reply: `Invalid Date. Example: "${context.prefix}set birthday 08/14/2005 (mm/dd/yyyy)". ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
+					reply: `Invalid Date Format. Example: "${context.prefix}set birthday 08/14/2005 (mm/dd/yyyy)". ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
+				}
+      }
+			if (!compareDate.isBetween(startDate, endDate)) {
+				return {
+					success: false,
+					reply: `Invalid Date Range. The maximum age is 90, and the minimum age is 13. Example: "${context.prefix}set birthday 08/14/2005 (mm/dd/yyyy)". ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 				}
 			}
 			utils.setData(`${context.user}Birthday`, value)
