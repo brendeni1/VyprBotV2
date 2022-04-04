@@ -15,12 +15,6 @@ module.exports = async (client, context) => {
   try {
     let searchRegex = new RegExp(context.args[0], 'i')
     let emotes = await utils.getChannelEmotes(channel)
-    if(!emotes) {
-      return {
-        success: false,
-        reply: `#${channel} has no emotes in their channel! ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
-      }
-    }
     let matches = emotes.filter(i => {
       return i.match(searchRegex)
     })
