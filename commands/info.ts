@@ -29,19 +29,19 @@ module.exports = async (client, context) => {
 			roles.push('(No Roles)')
 		}
 		const bannedUser = userData.banned
-		const banReason = userData.banned ?
-			userData.banReason ?
-			userData.banReason == 'TOS_TEMPORARY' ?
-			`| Ban Reason: @${userData.displayName} is temporarily banned for violating Twitch TOS.` :
-			userData.banReason == 'TOS_INDEFINITE' ?
-			`| Ban Reason: @${userData.displayName} is permanently banned for violating Twitch TOS.` :
-			userData.banReason == 'DEACTIVATED' ?
-			`| Ban Reason: @${userData.displayName} has manually closed their account, they aren't banned.` :
-      userData.banReason == 'DMCA' ?
-			`| Ban Reason: @${userData.displayName}'s channel was closed due to DMCA.` :
-			`| Ban Reason: ${userData.banReason}` :
-			`| Ban Reason: (NONE)` :
-			``
+		const banReason = userData.banned
+      ? userData.banReason
+      ? userData.banReason == 'TOS_TEMPORARY' 
+      ? `| Ban Reason: @${userData.displayName} is temporarily banned for violating Twitch TOS.` 
+      : userData.banReason == 'TOS_INDEFINITE' 
+      ? `| Ban Reason: @${userData.displayName} is permanently banned for violating Twitch TOS.` 
+      : userData.banReason == 'DEACTIVATED' 
+      ? `| Ban Reason: @${userData.displayName} has manually closed their account, they aren't banned.` 
+      : userData.banReason == 'DMCA' 
+      ? `| Ban Reason: @${userData.displayName}'s channel was closed due to DMCA.` 
+      : `| Ban Reason: ${userData.banReason}` 
+      : `| Ban Reason: (NONE)` 
+      : ``
 		let obj = {
 			banned: userData.banned,
 			followers: userData.followers,
