@@ -98,7 +98,7 @@ client.on("PRIVMSG", async (msg) => {
   }
 
   if (/\b(unhandled)?\s?promise\s?rejection\b/i.test(message) && userlow !== 'vyprbot' && channel === 'darkvypr' && !cooldown.commandCheck(userlow)) {
-    client.privmsg(channel, `js`)
+  client.privmsg(channel, `js`)
   	if(userlow != 'darkvypr') {
       cooldown.addToCooldown(userlow, 3000)
     }
