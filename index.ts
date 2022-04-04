@@ -85,35 +85,35 @@ client.on("PRIVMSG", async (msg) => {
 
   if (userlow === 'xenoplopqb' && message.includes('modCheck') && channel === 'darkvypr' && !cooldown.commandCheck(userlow)) {
     client.privmsg(channel, `modCheck`)
-  	if(userlow != 'darkvypr') {
+    if (userlow != 'darkvypr') {
       cooldown.addToCooldown(userlow, 3000)
     }
   }
 
   if (/\bNaN\b/i.test(message) && userlow !== 'vyprbot' && channel === 'darkvypr' && !cooldown.commandCheck(userlow)) {
     client.privmsg(channel, `NaN`)
-  	if(userlow != 'darkvypr') {
+    if (userlow != 'darkvypr') {
       cooldown.addToCooldown(userlow, 3000)
     }
   }
 
   if (/\b(unhandled)?\s?promise\s?rejection\b/i.test(message) && userlow !== 'vyprbot' && channel === 'darkvypr' && !cooldown.commandCheck(userlow)) {
-  client.privmsg(channel, `js`)
-  	if(userlow != 'darkvypr') {
+    client.privmsg(channel, `js`)
+    if (userlow != 'darkvypr') {
       cooldown.addToCooldown(userlow, 3000)
     }
   }
 
   if (/@?vyprbot,?\sprefix(\?)?/i.test(message) && !cooldown.commandCheck(userlow)) {
     client.me(channel, `${user} --> The prefix for this channel is: "${prefix.trim()}"`)
-  	if(userlow != 'darkvypr') {
+    if (userlow != 'darkvypr') {
       cooldown.addToCooldown(userlow, 3000)
     }
   }
 
   if (message.startsWith('!ping') && !cooldown.commandCheck(userlow)) {
     client.me(channel, `${user} --> Use: "${prefix.trim()}" as the prefix for all VyprBot commands in this channel. Example: "${prefix}ping".`)
-  	if(userlow != 'darkvypr') {
+    if (userlow != 'darkvypr') {
       cooldown.addToCooldown(userlow, 3000)
     }
   }
