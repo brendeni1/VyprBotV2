@@ -7,6 +7,7 @@ import dateFormat, { masks } from "dateformat"
 import isoConv from 'iso-language-converter'
 import Database from "@replit/database"
 const fuzzySearch = require('fuzzysort')
+import country from 'countryjs'
 const db = new Database()
 
 const twitch = new TwitchApi({

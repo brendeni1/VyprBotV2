@@ -3,6 +3,7 @@ import fs from 'fs-extra'
 import handler from './commands/handler'
 import cooldown from './cooldown'
 import utils from './utils'
+import globalPing from './tools/globalPing'
 import {
   ChatClient,
   AlternateMessageModifier,
@@ -64,12 +65,13 @@ client.on("PRIVMSG", async (msg) => {
 
   // Global Pings
 
-  let globalPing = /\b(v|b)ypa(')?(s)?\b/i.test(message) || /(bright|dark)?(v|b)(y)p(e|u|o)?r/i.test(message) || /\b(dv(')?(s)?)\b/i.test(message) || /vpyr/i.test(message) || /\b(b|v)o?ip(o*|u)r\b/i.test(message) || /\b(bright|dark)vip(e|u|o)r\b/i.test(message) || /\b(b|v)ip(o|u)r\b/i.test(message) || /\b(b|v)pe?r\b/i.test(message) || /darkv/i.test(message) || /\b(dark|bright)?\s?dype?(r|a)\b/i.test(message) || /\b(b|v)ooper\b/i.test(message) || /(dark|bright)\s?diaper/i.test(message) || /(dark|bright)\s?viper|vypr/i.test(message)
-  const blacklistedChannels = new RegExp(/visioisiv|darkvypr|vyprbottesting|vyprbot/)
-  const blacklistedUsers = new RegExp(/darkvypr|vyprbot|vyprbottesting|hhharrisonnnbot|apulxd|daumenbot|kuharabot|snappingbot|oura_bot/)
-
-  if (globalPing && !blacklistedChannels.test(channel) && !blacklistedUsers.test(userlow)) {
-    client.whisper('darkvypr', `Channel: #${channel} | User: ${userlow} | Message: ${message}`)
+  let ping = globalPing({
+    user: userlow,
+    channel: channel,
+    message: message
+  })
+  if(ping) {
+    client.whisper('darkvypr', ping)
   }
 
   // Prefix
