@@ -13,10 +13,10 @@ module.exports = async (client, context) => {
 			reply: `Invalid Syntax! The max spam is 80, and the correct syntax is: "${context.prefix}spam {amount} {message}"! ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
-	const amount = context.args[0]
+	const amount = +context.args[0]
 	context.args.shift()
-	const message = `/me ${context.args.join(' ')}`
-	for (let i = amount; i--;) {
-		client.privmsg(context.channel, message)
-	}
+  return {
+    success: true,
+    reply: Array(amount).fill(`/me ${context.args.join(' ')}`)
+  }
 }

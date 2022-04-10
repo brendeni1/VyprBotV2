@@ -66,6 +66,16 @@ const fetch = async (url, headers, format) => {
 }
 exports.fetch = fetch
 
+const checkContentType = async (url, headers) => {
+  headers = headers ? headers : { method: 'GET' }
+  const response = await nodeFetch(url, { headers: headers })
+  if (!response.ok) {
+    throw `Error: ${response.statusText}`
+  }
+  return response.headers.get('content-type').replace(/;\scharset(.*)/g, '')
+}
+exports.checkContentType = checkContentType
+
 const fetchPost = async (url, format, headers) => {
   format = format ? format : 'json'
   headers = headers ? headers : { method: 'POST' }

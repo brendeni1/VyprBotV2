@@ -70,7 +70,7 @@ client.on("PRIVMSG", async (msg) => {
     channel: channel,
     message: message
   })
-  if(ping) {
+  if (ping) {
     client.whisper('darkvypr', ping)
   }
 
@@ -152,14 +152,38 @@ client.on("PRIVMSG", async (msg) => {
 
   // Check And Send The Message 
 
-  let sendReply = (reply) => {
+  let sendReply = async (reply) => {
     try {
-      reply = String(reply)
       let regex = new RegExp(process.env.BAD_WORD_REGEX)
+      if (Array.isArray(reply)) {
+        console.log(reply)
+        let profane = false
+        reply.forEach(i => {
+          if(regex.test(i)) {
+            profane = true
+          }
+        })
+        if(profane) {
+          let emote = await utils.bestEmote(channel, ['PANIC', 'panicBasket', 'GearScare', 'cmonNep', '🫢', '😨'])
+          client.me(channel, `${user} --> ${emote} Bad Word Detected ${emote}`)
+          return
+        }
+        reply.forEach(i => {
+          i = i.length > 490
+          ? i.slice(0, 490) + "..."
+          : i
+          client.privmsg(channel, i)
+        })
+        return
+      }
+      reply = String(reply)
       reply = regex.test(reply)
-        ? `panicBasket Bad Word Detected panicBasket`
+        ? `${user} -->  panicBasket Bad Word Detected panicBasket`
         : `${user} --> ${reply.replace(/\n|\r/gim, '')}`
-      reply = reply.length > 490 ? reply.slice(0, 490) + "..." : reply
+
+      reply = reply.length > 490
+        ? reply.slice(0, 490) + "..."
+        : reply
       client.me(channel, reply)
     } catch (e) {
       client.me(channel, `${user} --> ${e}`)
