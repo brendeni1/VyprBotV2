@@ -67,16 +67,20 @@ module.exports = async (client, context) => {
     let [humidity, clouds] = [+weather.humidity, +weather.clouds]
     let [sunrise, sunset, currentTime, timeOffset] = [new Date(+weather.sunrise * 1000), new Date(+weather.sunset * 1000), new Date(), hourCheck ? `(+${hour + 1} hour${hour > 1 ? 's' : ''})` : '(Now)']
     let alertArray = []
+    let alertString
     if (alerts) {
       alerts.forEach(alert => {
-        alertArray.push(alert.tags[0] ? alert.tags.join(', ') : alert.event)
+        if(alert.tags[0]) {
+          alertArray.push(alert.tags)
+        }
       })
-      if(alerts[0].event == 'weather' && /rain(fall)?/.test(alerts[0].description)) {
-        alertArray.push('Flood')
-      }
     }
-    if (!alerts) {
-      alertArray.push('(None)')
+    if(alertArray[0]) {
+      alertArray = [...new Set(alertArray.flat())]
+      alertString = `Alert: ${alertArray.join(', ')}. ⚠️`
+    }
+    if (!alerts || !alertArray[0]) {
+      alertString = ''
     }
     windGust = isNaN(windGust) ? 'No wind gust data. 💨' : `with wind gusts of up to ${windGust} km/h. 💨`
     let precipitation = () => {
@@ -148,7 +152,7 @@ module.exports = async (client, context) => {
     }
     return {
       success: true,
-      reply: `${weatherObj.location} ${timeOffset} ${weatherObj.temp.c} (${weatherObj.temp.f}) feels like ${weatherObj.temp.fC} (${weatherObj.temp.fF}) ${weatherObj.condition} ${weatherObj.precipitation} The wind speed is ${weatherObj.wind.speed}, ${weatherObj.wind.gust} ${!hour && hour != 0 ? weatherObj.sun : ''} Humidity: ${weatherObj.humidity} Cloud Coverage: ${weatherObj.clouds} Alert: ${weatherObj.weatherAlert} ⚠️`
+      reply: `${weatherObj.location} ${timeOffset} ${weatherObj.temp.c} (${weatherObj.temp.f}) feels like ${weatherObj.temp.fC} (${weatherObj.temp.fF}) ${weatherObj.condition} ${weatherObj.precipitation} The wind speed is ${weatherObj.wind.speed}, ${weatherObj.wind.gust} ${!hour && hour != 0 ? weatherObj.sun : ''} Humidity: ${weatherObj.humidity} Cloud Coverage: ${weatherObj.clouds} ${alertString}`
     }
   } catch (e) {
     return {

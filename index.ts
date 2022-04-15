@@ -1,4 +1,4 @@
-// require("http").createServer((_, res) => res.end("Alive!")).listen(8080)
+require("http").createServer((_, res) => res.end("Alive!")).listen(9090)
 import fs from 'fs-extra'
 import handler from './commands/handler'
 import cooldown from './cooldown'
@@ -156,7 +156,6 @@ client.on("PRIVMSG", async (msg) => {
     try {
       let regex = new RegExp(process.env.BAD_WORD_REGEX)
       if (Array.isArray(reply)) {
-        console.log(reply)
         let profane = false
         reply.forEach(i => {
           if(regex.test(i)) {
