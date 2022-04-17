@@ -15,7 +15,9 @@ module.exports = async (client, context) => {
 	if (!bday) {
 		return {
 			success: false,
-			reply: originalUser == context.user ? `Before using this command, you must set your birthday with the "${context.prefix}set birthday" command. It must be in M/D/YYYY or MM/DD/YYYY format. Examples: "${context.prefix}set birthday 8/14/2005", "${context.prefix}set birthday 10/16/2004" or "${context.prefix}set birthday 9/11/1973".` : `That user hasen't set their birthday! Get them to use: "${context.prefix}set bday {mm/dd/yyyy}" and retry this command! ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
+			reply: originalUser == context.user
+        ? `Before using this command, you must set your birthday with the "${context.prefix}set birthday" command. It must be in M/D/YYYY or MM/DD/YYYY format. Examples: "${context.prefix}set birthday 8/14/2005", "${context.prefix}set birthday 10/16/2004" or "${context.prefix}set birthday 9/11/1973".`
+        : `That user hasen't set their birthday! Get them to use: "${context.prefix}set bday {mm/dd/yyyy}" and retry this command! ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
 		}
 	}
 	let today = utils.formatDate(new Date(), 'paddedShortDate')
@@ -24,8 +26,12 @@ module.exports = async (client, context) => {
 	let turningage = currentage + 1
 	let birthdayDelta = new Date(bdayCurrentYear) - new Date()
 	let userContext = {
-		userAddress: originalUser == context.user ? userNoun = 'You were' : userNoun = '@' + context.user + ' was',
-		pronoun: originalUser == context.user ? userNoun = 'you' : userNoun = 'they'
+		userAddress: originalUser == context.user
+      ? userNoun = 'You were'
+      : userNoun = '@' + context.user + ' was',
+		pronoun: originalUser == context.user
+      ? userNoun = 'you'
+      : userNoun = 'they'
 	}
 	let [yearCase, yearCaseBday] = [birthdayDelta < 0 ? 31536000000 : 0, birthdayDelta < 0 ? 1 : 0]
 	let nextBday = utils.formatTime(yearCase + birthdayDelta)

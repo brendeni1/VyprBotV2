@@ -34,6 +34,12 @@ module.exports = async (client, context) => {
       reply: `${emoteData.emoteCode} (ID: ${emoteData.emoteID}) is a ${emoteData.emoteAssetType.toLowerCase()} ${sourceType} ${emoteLink} ${authorLink}`
     }
 	} catch (err) {
+    if (err == 'Error: Not Found') {
+  		return {
+  			success: false,
+  			reply: `That emote wasn't valid! Use the emote's url instead. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', '😵', '⛔'])}`
+  		}
+    }
 		return {
 			success: false,
 			reply: err
