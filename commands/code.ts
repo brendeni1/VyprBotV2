@@ -14,6 +14,7 @@ module.exports = async (client, context) => {
   if(command == 'birthday') { command = 'bday' }
   if(command == 'top') { command = 'topstreams' }
   if(command == 'subage') { command = 'sa' }
+	if (command == 'query') { command = 'wolfram' }
 	let commandCheck = (await fs.readdir(__dirname)).indexOf(command)
 	if (commandCheck == -1 || command == 'handler.js' || command == 'template.js') {
 		return {
