@@ -1,4 +1,5 @@
 suggestions/
+notifications/
 .build/
 node_modules/
 replit.nix

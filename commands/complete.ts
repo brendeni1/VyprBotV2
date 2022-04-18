@@ -1,4 +1,5 @@
 import utils from '../utils'
+import notify from '../tools/notifier'
 import fs from 'fs-extra'
 
 module.exports = async (client, context) => {
@@ -36,7 +37,9 @@ module.exports = async (client, context) => {
 	})
 	await fs.rename(`suggestions/active/${id}.json`, `suggestions/${action}/${id}.json`)
 	client.whisper(suggestionDetails.user, `[Suggestion Update] Your suggestion with the ID ${suggestionDetails.id} was ${action}! Notes: ${reason}`)
-	suggestionDetails.user == 'darkvypr' ? null : await utils.fetchPost(`https://supinic.com/api/bot/reminder?auth_user=${process.env['SUPI_USER_AUTH']}&auth_key=${process.env['SUPI_USERKEY_AUTH']}&username=${suggestionDetails.user}&private=true&text=[VyprBot Update] Your suggestion on VyprBot with the ID ${suggestionDetails.id} was ${action}! Notes: ${reason}`)
+	if (suggestionDetails.user != 'darkvypr') {
+    await notify.add(suggestionDetails.user, `Your suggestion with the ID ${suggestionDetails.id} was ${action}! Notes: ${reason}`)
+  }
 	return {
 		success: true,
 		reply: `Successfully notified @${suggestionDetails.user} and ${action} suggestion ${suggestionDetails.id}.`

@@ -1,5 +1,7 @@
 import * as _utils from '../utils'
 const utils = _utils
+import * as _notify from '../tools/notifier'
+const notify = _notify
 import * as _humanizeDuration from 'humanize-duration'
 const humanizeDuration = _humanizeDuration
 

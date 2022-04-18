@@ -8,6 +8,7 @@ import isoConv from 'iso-language-converter'
 import Database from "@replit/database"
 const fuzzySearch = require('fuzzysort')
 import country from 'countryjs'
+import notify from './tools/notifier'
 const db = new Database()
 
 const twitch = new TwitchApi({
@@ -18,12 +19,46 @@ const twitch = new TwitchApi({
 });
 
 const formatDelta = (date) => {
-  return humanizeDuration(new Date(date) - new Date(), { round: true, largest: 2 })
+  return humanizeDuration(new Date(date) - new Date(), {
+    spacer: "",
+    round: true,
+    largest: 2,
+    language: "shortEn",
+    languages: {
+      shortEn: {
+        y: () => "y",
+        mo: () => "mo",
+        w: () => "w",
+        d: () => "d",
+        h: () => "h",
+        m: () => "m",
+        s: () => "s",
+        ms: () => "ms",
+      },
+    },
+  })
 }
 exports.formatDelta = formatDelta
 
 const formatTime = (date) => {
-  return humanizeDuration(date, { round: true, largest: 2 })
+  return humanizeDuration(new Date(date), {
+    spacer: "",
+    round: true,
+    largest: 2,
+    language: "shortEn",
+    languages: {
+      shortEn: {
+        y: () => "y",
+        mo: () => "mo",
+        w: () => "w",
+        d: () => "d",
+        h: () => "h",
+        m: () => "m",
+        s: () => "s",
+        ms: () => "ms",
+      },
+    },
+  })
 }
 exports.formatTime = formatTime
 
