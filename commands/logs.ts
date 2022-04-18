@@ -10,10 +10,11 @@ module.exports = async (client, context) => {
       : context.channel
     
     let leppuChannels = await utils.fetch('https://logs.ivr.fi/channels')
-    leppuChannels = leppuChannels.channels.map(i => {
-      return i.name
+    leppuChannels = leppuChannels.channels.filter(i => {
+      return i.name == channel
     })
-    if (leppuChannels.indexOf(channel) > -1) {
+    console.log(leppuChannels)
+    if (leppuChannels[0]) {
       return {
         success: true,
         reply: `@${target} in #${channel} | https://logs.ivr.fi/?channel=${channel}&username=${target}`
@@ -21,10 +22,10 @@ module.exports = async (client, context) => {
     }
     
     let apulxdChannels = await utils.fetch('https://logs.apulxd.ga/channels')
-    apulxdChannels = apulxdChannels.channels.map(i => {
-      return i.name
+    apulxdChannels = apulxdChannels.channels.filter(i => {
+      return i.name == channel
     })
-    if (apulxdChannels.indexOf(channel) > -1) {
+    if (apulxdChannels[0]) {
       return {
         success: true,
         reply: `@${target} in #${channel} | https://logs.apulxd.ga/?channel=${channel}&username=${target}`
@@ -32,10 +33,10 @@ module.exports = async (client, context) => {
     }
 
     let harambelogsChannels = await utils.fetch('https://harambelogs.pl/channels')
-    harambelogsChannels = harambelogsChannels.channels.map(i => {
-      return i.name
+    harambelogsChannels = harambelogsChannels.channels.filter(i => {
+      return i.name == channel
     })
-    if (harambelogsChannels.indexOf(channel) > -1) {
+    if (harambelogsChannels[0]) {
       return {
         success: true,
         reply: `@${target} in #${channel} | https://harambelogs.pl/?channel=${channel}&username=${target}`
@@ -43,10 +44,10 @@ module.exports = async (client, context) => {
     }
 
     let magichackChannels = await utils.fetch('https://logs.magichack.xyz/channels')
-    magichackChannels = magichackChannels.channels.map(i => {
-      return i.name
+    magichackChannels = magichackChannels.channels.filter(i => {
+      return i.name == channel
     })
-    if (magichackChannels.indexOf(channel) > -1) {
+    if (magichackChannels[0]) {
       return {
         success: true,
         reply: `@${target} in #${channel} | https://logs.magichack.xyz/?channel=${channel}&username=${target}`
@@ -54,10 +55,10 @@ module.exports = async (client, context) => {
     }
     
     let vtlogsChannels = await utils.fetch('https://vtlogs.moe/channels')
-    vtlogsChannels = vtlogsChannels.channels.map(i => {
-      return i.name
+    vtlogsChannels = vtlogsChannels.channels.filter(i => {
+      return i.name == channel
     })
-    if (vtlogsChannels.indexOf(channel) > -1) {
+    if (vtlogsChannels[0]) {
       return {
         success: true,
         reply: `@${target} in #${channel} | https://vtlogs.moe/?channel=${channel}&username=${target}`
