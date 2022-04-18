@@ -13,11 +13,11 @@ module.exports = async (client, context) => {
     leppuChannels = leppuChannels.channels.filter(i => {
       return i.name == channel
     })
-    console.log(leppuChannels)
     if (leppuChannels[0]) {
+      const lastMessage = await utils.fetch(`https://api.ivr.fi/logs/lastmessage/${channel}/${target}`)
       return {
         success: true,
-        reply: `@${target} in #${channel} | https://logs.ivr.fi/?channel=${channel}&username=${target}`
+        reply: `Last Message: @${target} said "${lastMessage.response}" (${utils.formatDelta(lastMessage.timestamp)} ago) in #${channel} | https://logs.ivr.fi/?channel=${channel}&username=${target}`
       }
     }
     

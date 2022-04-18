@@ -58,7 +58,14 @@ exports.listData = listData
 const fetch = async (url, headers, format) => {
   format = format ? format : 'json'
   headers = headers ? headers : { method: 'GET' }
-  const response = await nodeFetch(url, { headers: headers })
+  let response = await nodeFetch(url, { headers: headers })
+  if (!response.ok && /api\.ivr\.fi/.test(url)) {
+    response = await response[format]()
+    let err = /api\.ivr\.fi\/v2/.test(url)
+      ? `Error: ${response.message}`
+      : `Error: ${response.error}`
+    throw err
+  }
   if (!response.ok) {
     throw `Error: ${response.statusText}`
   }
