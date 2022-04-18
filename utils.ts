@@ -66,6 +66,10 @@ const fetch = async (url, headers, format) => {
       : `Error: ${response.error}`
     throw err
   }
+  if (!response.ok && /api\.apulxd\.ga/.test(url)) {
+    response = await response[format]()
+    throw response.error
+  }
   if (!response.ok) {
     throw `Error: ${response.statusText}`
   }

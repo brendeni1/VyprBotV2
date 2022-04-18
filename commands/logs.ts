@@ -1,14 +1,13 @@
 import utils from '../utils'
 
 module.exports = async (client, context) => {
+  let target = context.args[0]
+    ? context.args[0].toLowerCase().replace('@', '')
+    : context.user
+  let channel = context.args[1]
+    ? context.args[1].toLowerCase().replace('@', '')
+    : context.channel
   try {
-    let target = context.args[0]
-      ? context.args[0].toLowerCase().replace('@', '')
-      : context.user
-    let channel = context.args[1]
-      ? context.args[1].toLowerCase().replace('@', '')
-      : context.channel
-    
     let leppuChannels = await utils.fetch('https://logs.ivr.fi/channels')
     leppuChannels = leppuChannels.channels.filter(i => {
       return i.name == channel
@@ -26,9 +25,10 @@ module.exports = async (client, context) => {
       return i.name == channel
     })
     if (apulxdChannels[0]) {
+      const lastMessage = await utils.fetch(`https://api.apulxd.ga/logs/lastmessage/${channel}/${target}`)
       return {
         success: true,
-        reply: `@${target} in #${channel} | https://logs.apulxd.ga/?channel=${channel}&username=${target}`
+        reply: `Last Message: @${target} said "${lastMessage.text}" (${utils.formatDelta(lastMessage.timestamp)} ago) in #${channel} | https://logs.apulxd.ga/?channel=${channel}&username=${target}`
       }
     }
 
