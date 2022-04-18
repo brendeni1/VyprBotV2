@@ -12,7 +12,7 @@ module.exports = async (client, context) => {
   if (!context.args[0] || !context.args[1] || options.indexOf(context.args[0]) == -1) {
     return {
       success: false,
-      reply: `Invalid syntax! Correct: "${context.prefix}remind {add|delete/remove|read} {user} {body-text}"`
+      reply: `Invalid syntax! Correct: "${context.prefix}remind {add|delete/remove|read} {user} {body-text}" ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
     }
   }
   const action = context.args[0].toLowerCase()
@@ -23,7 +23,13 @@ module.exports = async (client, context) => {
       if (!context.args[0]) {
         return {
           success: false,
-          reply: `Invalid syntax! Correct: "${context.prefix}remind {add*|delete/remove|read} {user} {body-text*}"`
+          reply: `Invalid syntax! Correct: "${context.prefix}remind {add*|delete/remove|read} {user} {body-text*}" ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
+        }
+      }
+      if (!await utils.userExists(target)) {
+        return {
+          success: false,
+          reply: `That user (@${target}) doesn't exist! ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
         }
       }
       const body = context.args.join(' ')
@@ -45,7 +51,7 @@ module.exports = async (client, context) => {
       let notis = await notify.read(target)
       return {
         success: true,
-        reply: `${notis.formatted}`
+        reply: `@${target}'s notifications => ${notis.formatted}`
       }
     }
   } catch (e) {
