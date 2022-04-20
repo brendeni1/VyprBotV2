@@ -70,6 +70,7 @@ module.exports = async (client, context) => {
       reply: `That channel (#${channel}) isn't on any log sites, or the user (@${target}) hasn't said anything in that channel.`
     }
   } catch (e) {
+    console.log(e)
     return {
       success: false,
       reply: `That channel (#${channel}) isn't on any log sites, or the user (@${target}) hasn't said anything in that channel.`

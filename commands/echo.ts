@@ -21,11 +21,10 @@ module.exports = async (client, context) => {
 	const timer = ms => new Promise(res => setTimeout(res, ms))
 	if (channel == 'all') {
 		const channels = utils.getChannels()
-		for (let i = 0; i < channels.length; i++) {
-			channel = channels[i]
-			client.privmsg(channel, context.args.join(' '))
-			await timer(500)
-		}
+    channels.forEach(async i => {
+      client.privmsg(i, context.args.join(' '))
+      await timer(400)
+    })
 		return
 	}
 	client.privmsg(channel, context.args.join(' '))

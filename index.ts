@@ -14,7 +14,6 @@ import {
 import express from "express"
 var app = express()
 let client = new ChatClient({
-
   username: process.env.TWITCH_USERNAME,
   password: process.env.TWITCH_PASSWORD,
 
@@ -57,7 +56,6 @@ client.joinAll(channelOptions)
 // }, 60000 * 5 )
 
 client.on("PRIVMSG", async (msg) => {
-
   // Basic User Info
 
   let [user, userlow, channel, message] = [msg.displayName, msg.senderUsername, msg.channelName, msg.messageText.replace(' 󠀀', '').replace('󠀀', '')]
@@ -72,19 +70,19 @@ client.on("PRIVMSG", async (msg) => {
       if (Array.isArray(reply)) {
         let profane = false
         reply.forEach(i => {
-          if(regex.test(i)) {
+          if (regex.test(i)) {
             profane = true
           }
         })
-        if(profane) {
+        if (profane) {
           let emote = await utils.bestEmote(channel, ['PANIC', 'panicBasket', 'GearScare', 'cmonNep', '🫢', '😨'])
           client.me(channel, `${user} --> ${emote} Bad Word Detected ${emote}`)
           return
         }
         reply.forEach(i => {
           i = i.length > 490
-          ? i.slice(0, 490) + "..."
-          : i
+            ? i.slice(0, 490) + "..."
+            : i
           client.privmsg(channel, i)
         })
         return
@@ -126,10 +124,10 @@ client.on("PRIVMSG", async (msg) => {
   }
 
   let noti = await notifications(userlow)
-  if(noti) {
+  if (noti) {
     sendReply(noti.reply)
   }
-  
+
   // Global Pings
 
   let ping = globalPing({

@@ -14,6 +14,10 @@ module.exports = async (client, context) => {
     query = query.replace('https://static-cdn.jtvnw.net/emoticons/v2/', '').replace(/\/default\/dark\/[1-5]\.0/, '')
     isEmoteID = true
   }
+  if (context.emotes[0]) {
+    query = context.emotes[0].id
+    isEmoteID = true
+  }
 	try {
 		const emoteData = await utils.fetch(`https://api.ivr.fi/v2/twitch/emotes/${query}?id=${String(isEmoteID)}`)
     const sourceType = emoteData.emoteType == 'GLOBALS'
