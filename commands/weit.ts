@@ -20,30 +20,27 @@ module.exports = async (client, context) => {
   }
   try {
     const emoteData = await utils.fetch(`https://api.ivr.fi/v2/twitch/emotes/${query}?id=${String(isEmoteID)}`)
+    const channel = emoteData.channelName ? `the channel: @${emoteData.channelName}` : `a banned/deleted channel.`
     const sourceType = emoteData.emoteType == 'GLOBALS'
       ? 'global Twitch emote.'
       : emoteData.emoteType == 'SUBSCRIPTIONS'
-      ? emoteData.channelLogin
-      ? `Tier ${emoteData.emoteTier} subscriber emote to the channel @${emoteData.channelLogin}`
-      : `Tier ${emoteData.emoteTier} subscriber emote to an unknown/deleted channel.`
+      ? `Tier ${emoteData.emoteTier} subscriber emote to ${channel}`
       : emoteData.emoteType == 'FOLLOWER'
-      ? `follower emote to the channel @${emoteData.channelLogin}`
+      ? `follower emote to ${channel}`
       : emoteData.emoteType == 'SMILIES'
       ? `Twitch smiley emote.`
       : emoteData.emoteType == 'BITS_BADGE_TIERS'
-      ? emoteData.channelLogin
-      ? ` Bit emote that costs ${emoteData.emoteBitCost} Bits to the channel @${emoteData.channelLogin}`
-      : ` Bit emote that costs ${emoteData.emoteBitCost} Bits to an unknown/deleted channel.`
-      :`(Unknown Emote Type)`
+      ? ` Bit emote that costs ${emoteData.emoteBitCost} Bits to ${channel}`
+      : `(Unknown Emote Type)`
     const emoteLink = `Emote Link: https://emotes.raccatta.cc/twitch/emote/${emoteData.emoteID}`
     const authorLink = emoteData.emoteType == 'SUBSCRIPTIONS' || emoteData.emoteType == 'FOLLOWER'
       ? emoteData.channelLogin
-      ? `Author Emotes Link: https://emotes.raccatta.cc/twitch/${emoteData.channelLogin}`
-      : ''
+        ? `Author Emotes Link: https://emotes.raccatta.cc/twitch/${emoteData.channelLogin}`
+        : ''
       : ''
     return {
       success: true,
-      reply: `${emoteData.emoteCode} (ID: ${emoteData.emoteID}) is a ${emoteData.emoteAssetType.toLowerCase()} ${sourceType} ${emoteLink} ${authorLink}`
+      reply: `${emoteData.emoteCode} (ID: ${emoteData.emoteID}) is a ${emoteData.emoteAssetType.toLowerCase()} ${sourceType} | ${emoteLink} ${authorLink}`
     }
   } catch (err) {
     if (err == 'Error: Not Found') {
