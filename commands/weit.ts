@@ -30,10 +30,16 @@ module.exports = async (client, context) => {
       ? `follower emote to the channel @${emoteData.channelLogin}`
       : emoteData.emoteType == 'SMILIES'
       ? `Twitch smiley emote.`
-      : `(Unknown Emote Type)`
-    const emoteLink = `Emote Link: https://static-cdn.jtvnw.net/emoticons/v2/${emoteData.emoteID}/default/dark/3.0`
+      : emoteData.emoteType == 'BITS_BADGE_TIERS'
+      ? emoteData.channelLogin
+      ? ` Bit emote that costs ${emoteData.emoteBitCost} Bits to the channel @${emoteData.channelLogin}`
+      : ` Bit emote that costs ${emoteData.emoteBitCost} Bits to an unknown/deleted channel.`
+      :`(Unknown Emote Type)`
+    const emoteLink = `Emote Link: https://emotes.raccatta.cc/twitch/emote/${emoteData.emoteID}`
     const authorLink = emoteData.emoteType == 'SUBSCRIPTIONS' || emoteData.emoteType == 'FOLLOWER'
+      ? emoteData.channelLogin
       ? `Author Emotes Link: https://emotes.raccatta.cc/twitch/${emoteData.channelLogin}`
+      : ''
       : ''
     return {
       success: true,
