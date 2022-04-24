@@ -18,7 +18,7 @@ module.exports = async (client, context) => {
       'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com',
       'X-RapidAPI-Key': process.env.RAPID_API_KEY
     })
-    if (dictionaryResult.definitions[0]) {
+    if (dictionaryResult.definitions[0].definition) {
       if(index > dictionaryResult.definitions.length - 1) {
         return {
           success: false,
@@ -26,14 +26,15 @@ module.exports = async (client, context) => {
         }
       }
       let word = dictionaryResult.word
-      let definition = dictionaryResult.definitions[index].definition ?? `(No Definition)`
-      let partOfSpeech = dictionaryResult.definitions[index].partOfSpeech ?? `(No Part of Speech)`
+      let definition = dictionaryResult.definitions[0] ? dictionaryResult.definitions[index].definition : `(No Definition)`
+      let partOfSpeech = dictionaryResult.definitions[0] ? dictionaryResult.definitions[index].partOfSpeech : `(No Part of Speech)`
       return {
         success: true,
         reply: `Source: English Dictionary --> (${dictionaryResult.definitions.length - 1} other definition${dictionaryResult.definitions.length==2?'':'s'}) ${word} | ${partOfSpeech} | ${definition}`
       }
     }
   } catch (e) {
+    console.log(e)
     let wikiResult = await wiki.summary(encodeURIComponent(context.args.join(' ')))
     if(wikiResult.extract) {
       return {
