@@ -66,6 +66,9 @@ module.exports = async (client, context) => {
     let [windSpeed, windGust] = [(+weather.wind_speed * 3.6).toFixed(1), (+weather.wind_gust * 3.6).toFixed(1)]
     let [humidity, clouds] = [+weather.humidity, +weather.clouds]
     let [sunrise, sunset, currentTime, timeOffset] = [new Date(+weather.sunrise * 1000), new Date(+weather.sunset * 1000), new Date(), hourCheck ? `(+${hour + 1} hour${hour > 1 ? 's' : ''})` : '(Now)']
+    let airPressure = weather.pressure
+      ? `${weather.pressure} hPa 🫁`
+      : '(No Air Pressure Data)'
     let alertArray = []
     let alertString
     if (alerts) {
@@ -82,7 +85,53 @@ module.exports = async (client, context) => {
     if (!alerts || !alertArray[0]) {
       alertString = ''
     }
-    windGust = isNaN(windGust) ? 'No wind gust data. 💨' : `with wind gusts of up to ${windGust} km/h. 💨`
+    let windDir = +weather.wind_deg >= 338 && +weather.wind_deg < 23
+    ? {
+      dir: 'is travelling North',
+      emoji: ' ⬆️ '
+    }
+    : +weather.wind_deg >= 23 && +weather.wind_deg < 68
+    ? {
+      dir: 'is travelling North East',
+      emoji: ' ↗️ '
+    }
+    : +weather.wind_deg >= 68 && +weather.wind_deg < 112
+    ? {
+      dir: 'is travelling East',
+      emoji: ' ➡️ '
+    }
+    : +weather.wind_deg >= 112 && +weather.wind_deg < 156
+    ? {
+      dir: 'is travelling South East',
+      emoji: ' ↘️ '
+    }
+    : +weather.wind_deg >= 156 && +weather.wind_deg < 200
+    ? {
+      dir: 'is travelling South',
+      emoji: ' ⬇️ '
+    }
+    : +weather.wind_deg >= 200 && +weather.wind_deg < 244
+    ? {
+      dir: 'is travelling South West',
+      emoji: ' ↙️ '
+    }
+    : +weather.wind_deg >= 244 && +weather.wind_deg < 288
+    ? {
+      dir: 'is travelling West',
+      emoji: ' ⬅️ '
+    }
+    : +weather.wind_deg >= 288 && +weather.wind_deg < 338
+    ? {
+      dir: 'is travelling North West',
+      emoji: ' ↖️ '
+    }
+    : {
+      dir: 'is travelling',
+      emoji: ''
+    }
+    windGust = Number(windGust)
+      ? `with wind gusts of up to: ${windGust} km/h. ${windDir.emoji} 💨`
+      : `(No wind gust data). ${windDir.emoji} 💨`
     let precipitation = () => {
       if (!weather.rain && !weather.snow) {
         return ''
@@ -152,12 +201,12 @@ module.exports = async (client, context) => {
     }
     return {
       success: true,
-      reply: `${weatherObj.location} ${timeOffset} ${weatherObj.temp.c} (${weatherObj.temp.f}) feels like ${weatherObj.temp.fC} (${weatherObj.temp.fF}) ${weatherObj.condition} ${weatherObj.precipitation} The wind speed is ${weatherObj.wind.speed}, ${weatherObj.wind.gust} ${!hour && hour != 0 ? weatherObj.sun : ''} Humidity: ${weatherObj.humidity} Cloud Coverage: ${weatherObj.clouds} ${alertString}`
+      reply: `${weatherObj.location} ${timeOffset} ${weatherObj.temp.c} (${weatherObj.temp.f}); feels like ${weatherObj.temp.fC} (${weatherObj.temp.fF}) ${weatherObj.condition} ${weatherObj.precipitation} The wind ${windDir.dir} at speeds of: ${weatherObj.wind.speed}, ${weatherObj.wind.gust} ${!hour && hour != 0 ? weatherObj.sun : ''} Humidity: ${weatherObj.humidity} Cloud Coverage: ${weatherObj.clouds} ${alertString} Atmospheric Pressure: ${airPressure}`
     }
   } catch (e) {
     return {
       success: false,
-      reply: `Report this error with "${context.prefix}suggest"! ${e}`
+      reply: `Report this error with "${context.prefix}suggest"! (${e})`
     }
   }
 }
