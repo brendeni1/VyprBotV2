@@ -6,6 +6,7 @@ import utils from '../utils'
 module.exports = async (command, client, context) => {
   if(command == 'followage') { command = 'fa' }
   if(command == 'stream') { command = 'si' }
+  if(command == 'rem') { command = 'listemotes' }
   if(command == 'birthday') { command = 'bday' }
   if(command == 'top') { command = 'topstreams' }
   if(command == 'subage') { command = 'sa' }
