@@ -11,6 +11,7 @@ module.exports = async (command, client, context) => {
   if(command == 'top') { command = 'topstreams' }
   if(command == 'subage') { command = 'sa' }
 	if (command == 'query') { command = 'wolfram' }
+  if (command == 'help') { command = 'ping' }
 	command = command.toLowerCase() + '.js'
 	let commandCheck = (await fs.readdir(__dirname)).indexOf(command)
 	if (commandCheck == -1 || command == 'handler.js') {

@@ -36,7 +36,6 @@ module.exports = async (client, context) => {
 		reason: reason
 	})
 	await fs.rename(`suggestions/active/${id}.json`, `suggestions/${action}/${id}.json`)
-	client.whisper(suggestionDetails.user, `[Suggestion Update] Your suggestion with the ID ${suggestionDetails.id} was ${action}! Notes: ${reason}`)
 	if (suggestionDetails.user != 'darkvypr') {
     await notify.add(suggestionDetails.user, `[SYSTEM - Suggestion Update] Your suggestion with the ID ${suggestionDetails.id} was ${action}! Notes: ${reason}`)
   }
