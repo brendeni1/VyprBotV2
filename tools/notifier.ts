@@ -51,7 +51,7 @@ const read = async (user) => {
     throw `Error: That user has no reminders.`
   }
   const notiArray = notis.map(i => {
-    return `${i.body} (ID: ${i.id} | ${utils.formatDelta(i.date)} ago)`
+    return `${i.body} (${utils.formatDelta(i.date)} ago)`
   })
   return {
     raw: notis,

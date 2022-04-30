@@ -29,6 +29,13 @@ module.exports = async (client, context) => {
       }
     }
     pageContent = pageContent.replace(/\r/g, '').split('\n')
+    let length = pageContent.length
+    if (length > 500) {
+      return {
+        success: false,
+        reply: `That file has too many lines of text! The max amount of lines is 500, and that file has ${length} lines.`
+      }
+    }
     return {
       success: true,
       reply: pageContent
