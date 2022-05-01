@@ -22,11 +22,17 @@ The main reason that I rewrote this bot is because I wanted to clean up the code
 
 # How can I get the bot in my chat?
 
-If you would like this bot to be added to your chat, make sure to read [the commands page](https://bot.darkvypr.com/commands) before asking. After reading, you can use the "vb suggest command" in the bot's chat. Go to [the bots chat](https://twitch.tv/vyprbot) and use the vb suggest command. Example: "`vb suggest I would like the bot to be added to my chat!`". Once I read the suggestion, you will receive a DM on Twitch from the bot saying if you were accepted or denied.
+If you would like this bot to be added to your chat, make sure to read [the commands page](https://darkvypr.com/commands) before.
+
+After this, use "vb join" command in the bot's chat, or in any chat that the bot is in, and the bot will be available in your chat.
+
+**Discord:** DarkVypr#0001
+
+**Twitch:** DarkVypr
 
 # Can I change the prefix?
 
-Yes! Use: "vb set prefix {your prefix here}"
+Yes! Use: "vb set prefix {prefix}"
 
 # Is there a site for this bot?
 
@@ -34,4 +40,4 @@ Yes! The site for VyprBot can be found at: https://bot.darkvypr.com
 
 # How can I remove the bot from my chat?
 
-If you would like this bot to be removed from your chat, use the "vb part" command in your channel's chat.
+If you would like this bot to be removed from your chat, use the "vb part" command in the bot's chat, or in any chat that the bot is in, and the bot will no longer be available in your chat.
