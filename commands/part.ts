@@ -2,26 +2,22 @@ import utils from '../utils'
 import fs from 'fs-extra'
 
 module.exports = async (client, context) => {
-	if (context.channel != context.user && !await utils.checkAdmin(context.user)) {
-		return {
-			success: false,
-			reply: `You don't have permission to use that command! Required: Owner or Admin`
-		}
+	if (!await utils.checkAdmin(context.user) && context.args[0]) {
+    if (context.args[0].toLowerCase().replace('@', '') != context.user) {
+  		return {
+  			success: false,
+  			reply: `Only Admins can leave other people's channels. To remove VyprBot from your channel, use "vb part". Don't include a channel name.`
+  		}
+    }
 	}
 	const silentCheck = context.args.join(' ').match(/silent(:|=)(true|false)/i)
-	silent = silentCheck ? Boolean(silentCheck[2]) : false;
+	let silent = silentCheck ? Boolean(silentCheck[2]) : false;
 	if (silentCheck) {
 		context.args.splice(context.args.indexOf(silentCheck[0]), 1)
 	}
-	target = context.channel
+	let target = context.user
 	if (await utils.checkAdmin(context.user) && context.args[0]) {
 		target = context.args[0].toLowerCase().replace('@', '')
-	}
-	if (!await utils.checkAdmin(context.user) && context.args[0] && context.args[0].toLowerCase().replace('@', '') != context.channel) {
-		return {
-			success: false,
-			reply: `You don't have permission to leave other people's channels! Required: Admin ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
-		}
 	}
 	const channels = await utils.getChannels()
 	if (channels.indexOf(target) == -1) {
@@ -36,6 +32,7 @@ module.exports = async (client, context) => {
 	if (!silent) {
 		client.me(target, `Successfully Left PoroSad 👋`)
 	}
+  client.whisper('darkvypr', `Action: Left @${target} using channel: @${context.channel}`)
 	return {
 		success: true,
 		reply: `Successfully left #${target} PoroSad`
