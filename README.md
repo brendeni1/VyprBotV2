@@ -34,6 +34,10 @@ After this, use "vb join" command in the bot's chat, or in any chat that the bot
 
 Yes! Use: "vb set prefix {prefix}"
 
+# Can I check the prefix?
+
+Yes! Just say "@vyprbot prefix?" in chat.
+
 # Is there a site for this bot?
 
 Yes! The site for VyprBot can be found at: https://bot.darkvypr.com
