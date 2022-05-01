@@ -26,11 +26,15 @@ module.exports = async (client, context) => {
         }
       }
       let word = dictionaryResult.word
-      let definition = dictionaryResult.definitions[0] ? dictionaryResult.definitions[index].definition : `(No Definition)`
-      let partOfSpeech = dictionaryResult.definitions[0] ? dictionaryResult.definitions[index].partOfSpeech : `(No Part of Speech)`
+      let definition = dictionaryResult.definitions[0]
+        ? dictionaryResult.definitions[index].definition 
+        : `(No Definition)`
+      let partOfSpeech = dictionaryResult.definitions[0] && dictionaryResult.definitions[index].partOfSpeech 
+        ? `Part Of Speech: ${utils.capitalizeEachWord(dictionaryResult.definitions[index].partOfSpeech)}`
+        : `(No Part of Speech)`
       return {
         success: true,
-        reply: `Source: English Dictionary --> (${dictionaryResult.definitions.length - 1} other definition${dictionaryResult.definitions.length==2?'':'s'}) ${word} | ${partOfSpeech} | ${definition}`
+        reply: `Source: English Dictionary --> (${dictionaryResult.definitions.length - 1} other definition${dictionaryResult.definitions.length==2?'':'s'}) Word: ${word} | ${partOfSpeech} | ${definition}`
       }
     }
   } catch (e) {
