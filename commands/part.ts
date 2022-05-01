@@ -6,7 +6,7 @@ module.exports = async (client, context) => {
     if (context.args[0].toLowerCase().replace('@', '') != context.user) {
   		return {
   			success: false,
-  			reply: `Only Admins can leave other people's channels. To remove VyprBot from your channel, use "vb part". Don't include a channel name.`
+  			reply: `Only Admins can leave other people's channels. To remove VyprBot from your channel, use "${context.prefix}part". Don't include a channel name.`
   		}
     }
 	}

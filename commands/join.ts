@@ -6,7 +6,7 @@ module.exports = async (client, context) => {
     if (context.args[0].toLowerCase().replace('@', '') != context.user) {
   		return {
   			success: false,
-  			reply: `Only Admins can join other people's channels. To add VyprBot to your channel, use "vb join". Don't include a channel name.`
+  			reply: `Only Admins can join other people's channels. To add VyprBot to your channel, use "${context.prefix}join". Don't include a channel name.`
   		}
     }
 	}
