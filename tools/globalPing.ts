@@ -28,7 +28,7 @@ module.exports = (context) => {
   }
 
   const blacklistedChannels = ['visioisiv', 'darkvypr', 'vyprbottesting', 'vyprbot']
-  const blacklistedUsers = ['darkvypr', 'vyprbot', 'vyprbottesting', 'hhharrisonnnbot', 'apulxd', 'daumenbot', 'kuharabot', 'snappingbot', 'oura_bot', 'streamelements', 'supibot']
+  const blacklistedUsers = ['darkvypr', 'cendetta2', 'vyprbot', 'vyprbottesting', 'hhharrisonnnbot', 'apulxd', 'daumenbot', 'kuharabot', 'snappingbot', 'oura_bot', 'streamelements', 'supibot']
 
   if (ping && blacklistedChannels.indexOf(context.channel) == -1 && blacklistedUsers.indexOf(context.user) == -1) {
     return `#${context.channel} | @${context.user} | ${context.message}`
