@@ -13,6 +13,7 @@ module.exports = async (client, context) => {
   if(command == 'stream') { command = 'si' }
   if(command == 'birthday') { command = 'bday' }
   if(command == 'top') { command = 'topstreams' }
+  if(command == 'color') { command = 'colour' }
   if(command == 'subage') { command = 'sa' }
 	if (command == 'query') { command = 'wolfram' }
   if(command == 'rem') { command = 'listemotes' }
