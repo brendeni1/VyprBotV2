@@ -33,7 +33,5 @@ module.exports = (context) => {
   if (ping && blacklistedChannels.indexOf(context.channel) == -1 && blacklistedUsers.indexOf(context.user) == -1) {
     return `#${context.channel} | @${context.user} | ${context.message}`
   }
-  else {
-    return null
-  }
+  return null
 }

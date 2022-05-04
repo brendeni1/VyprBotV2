@@ -10,6 +10,7 @@ module.exports = async (command, client, context) => {
   if(command == 'birthday') { command = 'bday' }
   if(command == 'top') { command = 'topstreams' }
   if(command == 'subage') { command = 'sa' }
+  if(command == 'color') { command = 'colour' }
 	if (command == 'query') { command = 'wolfram' }
   if (command == 'help') { command = 'ping' }
 	command = command.toLowerCase() + '.js'
