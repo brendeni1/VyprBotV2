@@ -5,7 +5,7 @@ module.exports = async (client, context) => {
   if (!context.args[0] || !context.args[1]) {
     return {
       success: false,
-      reply: `Invalid command syntax!. Examples: "${context.prefix}set twitter darkvyprr", "${context.prefix}set birthday 8/14/2005 (mm/dd/yyyy)", "${context.prefix}set prefix !" or "${context.prefix}set location lasalle ontario" ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
+      reply: `Invalid command syntax!. Examples: "${context.prefix}set vin 2GNAXXEVXM6144737", "${context.prefix}set twitter darkvyprr", "${context.prefix}set birthday 8/14/2005 (mm/dd/yyyy)", "${context.prefix}set prefix !" or "${context.prefix}set location lasalle ontario" ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
     }
   }
   const [setting, value] = [context.args[0], context.args[1]]
@@ -51,7 +51,7 @@ module.exports = async (client, context) => {
       }
       utils.setData(`${context.user}Birthday`, value)
       return {
-        success: false,
+        success: true,
         reply: `Successfully set your birthday to: ${utils.formatDate(value, "fullDate")}!`
       }
     } catch (e) {
@@ -101,8 +101,29 @@ module.exports = async (client, context) => {
       reply: `You don't have the required permission to use that command! Required: Admin. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
     }
   }
+  if (setting == 'vin') {
+    let vinDetails = await utils.fetch(
+      `https://api.carmd.com/v3.0/decode?vin=${value}`,
+      {
+        "authorization":process.env.VIN_KEY,
+        "partner-token":process.env.PARTNER_VIN_TOKEN
+      }
+    )
+    let { message, data } = vinDetails
+    if (message.message != 'ok' || !data) {
+      return {
+        success: false,
+        reply: `The VIN provided wasn't valid! Please use a different VIN number. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'NOPERS', 'FeelsDankMan', '😐', '😵‍💫'])}`
+      }
+    }
+    utils.setData(`${context.user}VIN`, value.toUpperCase())
+    return {
+      success: true,
+      reply: `Successfully set your VIN to: ${value.toUpperCase()}!`
+    }
+  }
   return {
     success: false,
-    reply: `Invalid command syntax!. Examples: "${context.prefix}set twitter darkvyprr", "${context.prefix}set birthday 8/14/2005 (mm/dd/yyyy)", "${context.prefix}set prefix !" or "${context.prefix}set location lasalle ontario" ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
+    reply: `Invalid command syntax!. Examples: "${context.prefix}set vin 2GNAXXEVXM6144737", "${context.prefix}set twitter darkvyprr", "${context.prefix}set birthday 8/14/2005 (mm/dd/yyyy)", "${context.prefix}set prefix !" or "${context.prefix}set location lasalle ontario" ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsDankMan', 'FeelsBadMan', '😵', '⛔'])}`
   }
 }
