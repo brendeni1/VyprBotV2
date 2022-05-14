@@ -2,11 +2,11 @@ import utils from '../utils'
 
 module.exports = async (client, context) => {
   try {
-    const sender = context.args[0]
-      ? context.args[0].replace('@', '')
-      : context.user
-    const target = context.args[1]
+    const sender = context.args[1]
       ? context.args[1].replace('@', '')
+      : context.user
+    const target = context.args[0]
+      ? context.args[0].replace('@', '')
       : await utils.fetch(`https://decapi.me/twitch/random_user/${context.channel}`, undefined, 'text')
     const lovePercent = utils.randInt(0, 100)
     let hearts = ['💔', '💔', '💔', '💔', '💔', '💔', '💔', '💔', '💔', '💔']
