@@ -360,3 +360,18 @@ const getChannelEmotes = async (channel) => {
   }
 }
 exports.getChannelEmotes = getChannelEmotes
+
+const acronomize = (phrase) => {
+  if (!phrase) {
+    throw `No phrase was provided for acronymization. Report this error with the suggest command please!`
+  }
+  if (!Array.isArray(phrase)) {
+    phrase = phrase.split(' ')
+  }
+  let acronym = []
+  phrase.forEach(i => {
+    acronym.push(i[0].toUpperCase())
+  })
+  return acronym.join('')
+}
+exports.acronomize = acronomize

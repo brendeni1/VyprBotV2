@@ -102,18 +102,11 @@ module.exports = async (client, context) => {
     }
   }
   if (setting == 'vin') {
-    let vinDetails = await utils.fetch(
-      `https://api.carmd.com/v3.0/decode?vin=${value}`,
-      {
-        "authorization":process.env.VIN_KEY,
-        "partner-token":process.env.PARTNER_VIN_TOKEN
-      }
-    )
-    let { message, data } = vinDetails
-    if (message.message != 'ok' || !data) {
+    let vinDetails = await utils.fetch(`https://auto.dev/api/vin/${vin}?apikey=${process.env.VIN_KEY}`)
+    if (vinDetails.status || vinDetails.errorType) {
       return {
         success: false,
-        reply: `The VIN provided wasn't valid! Please use a different VIN number. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'NOPERS', 'FeelsDankMan', '😐', '😵‍💫'])}`
+        reply: `${vinDetails.message ?? '(Invalid VIN or Invalid API Call)'} ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'NOPERS', 'FeelsDankMan', '😐', '😵‍💫'])}`
       }
     }
     utils.setData(`${context.user}VIN`, value.toUpperCase())
