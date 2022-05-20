@@ -227,8 +227,6 @@ client.on("PRIVMSG", async (msg) => {
     args: args
   }
 
-  console.log(command)
-
   // Command
 
   if (command && !cooldown.commandCheck(userlow)) {
