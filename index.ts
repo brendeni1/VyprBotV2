@@ -59,7 +59,6 @@ client.on("PRIVMSG", async (msg) => {
   // Basic User Info
 
   let [user, userlow, channel, message] = [msg.displayName, msg.senderUsername, msg.channelName, msg.messageText.replace(' 󠀀', '').replace('󠀀', '')]
-
   console.log(`[#${channel}] ${user} (${userlow}): ${message}`)
 
   // Check And Send The Message 
@@ -185,6 +184,19 @@ client.on("PRIVMSG", async (msg) => {
     }
   }
 
+  if (message.startsWith('!ping') && !cooldown.commandCheck(userlow)) {
+    client.me(channel, `${user} --> Use: "${prefix.trim()}" as the prefix for all VyprBot commands in this channel. Example: "${prefix}ping".`)
+    if (userlow != 'darkvypr') {
+      cooldown.addToCooldown(userlow, 3000)
+    }
+  }
+  
+  if (msg.channelID == '424993941' && /asd/i.test(message)) {
+    let emotes = await utils.getSTV(channel)
+    emotes = utils.randArrayElement(emotes)
+    client.me(channel, `${emotes} ${emotes} ${emotes} ${emotes} ${emotes}`)
+  }
+
   if (!message.startsWith(prefix) || userlow === 'vyprbot') {
     return
   }
@@ -214,6 +226,8 @@ client.on("PRIVMSG", async (msg) => {
     serverTime: msg.serverTimestamp,
     args: args
   }
+
+  console.log(command)
 
   // Command
 

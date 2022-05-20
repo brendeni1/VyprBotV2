@@ -213,7 +213,7 @@ const searchSteam = async (title) => {
     return i.name
   })
   let games = fuzzySearch.go(title, steamGameNames)
-  if(!games[0] || !games[0].target) {
+  if (!games[0] || !games[0].target) {
     return null
   }
   let game = steamGames.find(i => {
@@ -234,27 +234,27 @@ const userExists = async (user) => {
 exports.userExists = userExists
 
 const bestEmote = async (channel, choices) => {
-  if(!Array.isArray(choices)) {
+  if (!Array.isArray(choices)) {
     throw 'Emote choices must be an array! Format: "utils.bestEmote(channel, [choices])"'
   }
-  if(choices.length < 2) {
+  if (choices.length < 2) {
     throw 'Choices must be an array that has at least 2 elements! Format: "utils.bestEmote(channel, [choices])"'
   }
   try {
     const channelData = await fetch(`https://api.ivr.fi/v2/twitch/user/${channel}`)
     let ffzEmotes = await nodeFetch(`https://api.betterttv.net/3/cached/frankerfacez/users/twitch/${channelData.id}`)
-    if(!ffzEmotes.ok) {
+    if (!ffzEmotes.ok) {
       ffzEmotes = null
     }
     let bttvEmotes = await nodeFetch(`https://api.betterttv.net/3/cached/users/twitch/${channelData.id}`)
-    if(!bttvEmotes.ok) {
+    if (!bttvEmotes.ok) {
       bttvEmotes = null
     }
     let sevenTVEmotes = await nodeFetch(`https://api.7tv.app/v2/users/${channel}/emotes`)
-    if(!sevenTVEmotes.ok) {
+    if (!sevenTVEmotes.ok) {
       sevenTVEmotes = null
     }
-    if(!ffzEmotes && !bttvEmotes && !sevenTVEmotes) {
+    if (!ffzEmotes && !bttvEmotes && !sevenTVEmotes) {
       const emojiCheck = choices.join().match(/(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/gi)
       return emojiCheck ? randArrayElement(emojiCheck) : ''
     }
@@ -268,19 +268,19 @@ const bestEmote = async (channel, choices) => {
     if (sevenTVEmotes) {
       sevenTVEmotes = await sevenTVEmotes.json()
     }
-    
+
     let ffzEmotesArray = ffzEmotes ? ffzEmotes.map(emotes => {
       return emotes.code
     })
-    : []
+      : []
     let bttvEmotesArray = bttvEmotes ? bttvEmotes.map(emotes => {
       return emotes.code
     })
-    : []
+      : []
     let sevenTVEmotesArray = sevenTVEmotes ? sevenTVEmotes.map(emotes => {
       return emotes.name
     })
-    : []
+      : []
     let addedEmotes = []
     ffzEmotes ? addedEmotes.push(ffzEmotesArray) : null
     bttvEmotes ? addedEmotes.push(bttvEmotesArray) : null
@@ -289,13 +289,13 @@ const bestEmote = async (channel, choices) => {
     let matches = addedEmotes.filter(emote => {
       return choices.includes(emote)
     })
-    if(!matches[0]) {
+    if (!matches[0]) {
       const globals = ["4Head", "8-)", ":(", ":(", ":)", ":-(", ":-)", ":-/", ":-D", ":-O", ":-P", ":-Z", ":-", ":-o", ":-p", ":-z", ":-|", ":/", ":/", ":D", ":D", ":O", ":O", ":P", ":P", ":Z", ":", ":o", ":p", ":z", ":|", ":|", ";)", ";)", ";-)", ";-P", ";-p", ";P", ";P", ";p", "<3", "<3", ">(", ">(", "ANELE", "ArgieB8", "ArsonNoSexy", "AsexualPride", "AsianGlow", "B)", "B)", "B-)", "BCWarrior", "BOP", "BabyRage", "BatChest", "BegWan", "BibleThump", "BigBrother", "BigPhish", "BisexualPride", "BlackLivesMatter", "BlargNaut", "BloodTrail", "BrainSlug", "BrokeBack", "BuddhaBar", "CaitlynS", "CarlSmile", "ChefFrank", "CoolCat", "CoolStoryBob", "CorgiDerp", "CrreamAwk", "CurseLit", "DAESuppy", "DBstyle", "DansGame", "DarkKnight", "DarkMode", "DatSheffy", "DendiFace", "DogFace", "DoritosChip", "DxCat", "EarthDay", "EleGiggle", "EntropyWins", "ExtraLife", "FBBlock", "FBCatch", "FBChallenge", "FBPass", "FBPenalty", "FBRun", "FBSpiral", "FBtouchdown", "FUNgineer", "FailFish", "FamilyMan", "FootBall", "FootGoal", "FootYellow", "FrankerZ", "FreakinStinkin", "FutureMan", "GayPride", "GenderFluidPride", "GingerPower", "GivePLZ", "GlitchCat", "GlitchLit", "GlitchNRG", "GrammarKing", "GunRun", "HSCheers", "HSWP", "HarleyWink", "HassaanChop", "HeyGuys", "HolidayCookie", "HolidayLog", "HolidayPresent", "HolidaySanta", "HolidayTree", "HotPokket", "HungryPaimon", "ImTyping", "IntersexPride", "InuyoFace", "ItsBoshyTime", "JKanStyle", "Jebaited", "Jebasted", "JonCarnage", "KAPOW", "KEKHeim", "Kappa", "KappaClaus", "KappaPride", "KappaRoss", "KappaWealth", "Kappu", "Keepo", "KevinTurtle", "Kippa", "KomodoHype", "KonCha", "Kreygasm", "LUL", "LaundryBasket", "LesbianPride", "MVGame", "Mau5", "MaxLOL", "MercyWing1", "MercyWing2", "MikeHogu", "MingLee", "ModLove", "MorphinTime", "MrDestructoid", "MyAvatar", "NewRecord", "NinjaGrumpy", "NomNom", "NonbinaryPride", "NotATK", "NotLikeThis", "O.O", "O.o", "OSFrog", "O_O", "O_o", "O_o", "OhMyDog", "OneHand", "OpieOP", "OptimizePrime", "PJSalt", "PJSugar", "PMSTwin", "PRChase", "PanicVis", "PansexualPride", "PartyHat", "PartyTime", "PeoplesChamp", "PermaSmug", "PicoMause", "PinkMercy", "PipeHype", "PixelBob", "PizzaTime", "PogBones", "PogChamp", "Poooound", "PopCorn", "PoroSad", "PotFriend", "PowerUpL", "PowerUpR", "PraiseIt", "PrimeMe", "PunOko", "PunchTrees", "R)", "R)", "R-)", "RaccAttack", "RalpherZ", "RedCoat", "ResidentSleeper", "RitzMitz", "RlyTho", "RuleFive", "RyuChamp", "SMOrc", "SSSsss", "SabaPing", "SeemsGood", "SeriousSloth", "ShadyLulu", "ShazBotstix", "Shush", "SingsMic", "SingsNote", "SmoocherZ", "SoBayed", "SoonerLater", "Squid1", "Squid2", "Squid3", "Squid4", "StinkyCheese", "StinkyGlitch", "StoneLightning", "StrawBeary", "SuperVinlin", "SwiftRage", "TBAngel", "TF2John", "TPFufun", "TPcrunchyroll", "TTours", "TakeNRG", "TearGlove", "TehePelo", "ThankEgg", "TheIlluminati", "TheRinger", "TheTarFu", "TheThing", "ThunBeast", "TinyFace", "TombRaid", "TooSpicy", "TransgenderPride", "TriHard", "TwitchLit", "TwitchRPG", "TwitchSings", "TwitchUnity", "TwitchVotes", "UWot", "UnSane", "UncleNox", "VirtualHug", "VoHiYo", "VoteNay", "VoteYea", "WTRuck", "WholeWheat", "WhySoSerious", "WutFace", "YouDontSay", "YouWHY", "bleedPurple", "cmonBruh", "copyThis", "duDudu", "imGlitch", "mcaT", "o.O", "o.o", "o_O", "o_o", "panicBasket", "pastaThat", "riPepperonis", "twitchRaid", "BagOfMemes", "FlipThis", "FortBush", "FortHype", "FortLlama", "FortOne", "KappaHD", "MindManners", "MiniK", "PartyPopper", "PokAegislash", "PokBlastoise", "PokBlaziken", "PokBraixen", "PokChandelure", "PokCharizard", "PokCroagunk", "PokDarkrai", "PokDecidueye", "PokEmpoleon", "PokGarchomp", "PokGardevoir", "PokGengar", "PokLucario", "PokMachamp", "PokMaskedpika", "PokMewtwo", "PokPikachu", "PokSceptile", "PokScizor", "PokShadowmew", "PokSuicune", "PokWeavile", "PrimeRlyTho", "PrimeUWot", "PrimeYouDontSay", "ScaredyCat", "TableHere", ":tf:", "AngelThump", "ariW", "BroBalt", "bttvNice", "bUrself", "CandianRage", "CiGrip", "ConcernDoge", "cvHazmat", "cvL", "cvMask", "cvR", "D:", "DatSauce", "DogChamp", "DuckerZ", "FeelsAmazingMan", "FeelsBadMan", "FeelsBirthdayMan", "FeelsGoodMan", "FeelsSnowMan", "FeelsSnowyMan", "FireSpeed", "FishMoley", "ForeverAlone", "GabeN", "haHAA", "HailHelix", "Hhhehehe", "IceCold", "KappaCool", "KaRappa", "KKona", "LuL", "monkaS", "NaM", "notsquishY", "PoleDoge", "RarePepe", "RonSmug", "SaltyCorn", "ShoopDaWhoop", "SoSnowy", "SourPls", "SqShy", "TaxiBro", "TwaT", "VapeNation", "VisLaud", "WatChuSay", "Wowee", "WubTF", "AndKnuckles", "BeanieHipster", "BORT", "CatBag", "LaterSooner", "LilZ", "ManChicken", "OBOY", "OiMinna", "YooHoo", "ZliL", "ZrehplaR", "ZreknarF", '7tvM', 'AlienDance', 'ApuApustaja', 'AYAYA', 'BasedGod', 'BillyApprove', 'Clap', 'Clap2', 'CrayonTime', 'EZ', 'FeelsDankMan', 'FeelsOkayMan', 'FeelsStrongMan', 'FeelsWeirdMan', 'forsenPls', 'gachiBASS', 'gachiGASM', 'GuitarTime', 'knaDyppaHopeep', 'nymnCorn', 'PartyParrot', 'peepoHappy', 'peepoSad', 'PepePls', 'PETPET', 'PianoTime', 'ppL', 'RainTime', 'RareParrot', 'RebeccaBlack', 'reckH', 'Stare', 'SteerR', 'TeaTime', 'WAYTOODANK', 'WineTime', 'YEAHBUT7TV']
       matches = globals.filter(emote => {
         return choices.includes(emote)
       })
     }
-    if(!matches[0]) {
+    if (!matches[0]) {
       const emojiCheck = choices.join().match(/(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/gi)
       return emojiCheck ? randArrayElement(emojiCheck) : ''
     }
@@ -307,24 +307,24 @@ const bestEmote = async (channel, choices) => {
 exports.bestEmote = bestEmote
 
 const getChannelEmotes = async (channel) => {
-  if(!channel) {
+  if (!channel) {
     throw 'Please report this error with: "vb suggest *get all channel emotes error, missing channel*"!'
   }
   try {
     const channelData = await fetch(`https://api.ivr.fi/v2/twitch/user/${channel}`)
     let ffzEmotes = await nodeFetch(`https://api.betterttv.net/3/cached/frankerfacez/users/twitch/${channelData.id}`)
-    if(!ffzEmotes.ok) {
+    if (!ffzEmotes.ok) {
       ffzEmotes = null
     }
     let bttvEmotes = await nodeFetch(`https://api.betterttv.net/3/cached/users/twitch/${channelData.id}`)
-    if(!bttvEmotes.ok) {
+    if (!bttvEmotes.ok) {
       bttvEmotes = null
     }
     let sevenTVEmotes = await nodeFetch(`https://api.7tv.app/v2/users/${channel}/emotes`)
-    if(!sevenTVEmotes.ok) {
+    if (!sevenTVEmotes.ok) {
       sevenTVEmotes = null
     }
-    if(!ffzEmotes && !bttvEmotes && !sevenTVEmotes) {
+    if (!ffzEmotes && !bttvEmotes && !sevenTVEmotes) {
       return null
     }
     if (ffzEmotes) {
@@ -340,15 +340,15 @@ const getChannelEmotes = async (channel) => {
     let ffzEmotesArray = ffzEmotes ? ffzEmotes.map(emotes => {
       return emotes.code
     })
-    : []
+      : []
     let bttvEmotesArray = bttvEmotes ? bttvEmotes.map(emotes => {
       return emotes.code
     })
-    : []
+      : []
     let sevenTVEmotesArray = sevenTVEmotes ? sevenTVEmotes.map(emotes => {
       return emotes.name
     })
-    : []
+      : []
     let addedEmotes = ["4Head", "8-)", ":(", ":(", ":)", ":-(", ":-)", ":-/", ":-D", ":-O", ":-P", ":-Z", ":-", ":-o", ":-p", ":-z", ":-|", ":/", ":/", ":D", ":D", ":O", ":O", ":P", ":P", ":Z", ":", ":o", ":p", ":z", ":|", ":|", ";)", ";)", ";-)", ";-P", ";-p", ";P", ";P", ";p", "<3", "<3", ">(", ">(", "ANELE", "ArgieB8", "ArsonNoSexy", "AsexualPride", "AsianGlow", "B)", "B)", "B-)", "BCWarrior", "BOP", "BabyRage", "BatChest", "BegWan", "BibleThump", "BigBrother", "BigPhish", "BisexualPride", "BlackLivesMatter", "BlargNaut", "BloodTrail", "BrainSlug", "BrokeBack", "BuddhaBar", "CaitlynS", "CarlSmile", "ChefFrank", "CoolCat", "CoolStoryBob", "CorgiDerp", "CrreamAwk", "CurseLit", "DAESuppy", "DBstyle", "DansGame", "DarkKnight", "DarkMode", "DatSheffy", "DendiFace", "DogFace", "DoritosChip", "DxCat", "EarthDay", "EleGiggle", "EntropyWins", "ExtraLife", "FBBlock", "FBCatch", "FBChallenge", "FBPass", "FBPenalty", "FBRun", "FBSpiral", "FBtouchdown", "FUNgineer", "FailFish", "FamilyMan", "FootBall", "FootGoal", "FootYellow", "FrankerZ", "FreakinStinkin", "FutureMan", "GayPride", "GenderFluidPride", "GingerPower", "GivePLZ", "GlitchCat", "GlitchLit", "GlitchNRG", "GrammarKing", "GunRun", "HSCheers", "HSWP", "HarleyWink", "HassaanChop", "HeyGuys", "HolidayCookie", "HolidayLog", "HolidayPresent", "HolidaySanta", "HolidayTree", "HotPokket", "HungryPaimon", "ImTyping", "IntersexPride", "InuyoFace", "ItsBoshyTime", "JKanStyle", "Jebaited", "Jebasted", "JonCarnage", "KAPOW", "KEKHeim", "Kappa", "KappaClaus", "KappaPride", "KappaRoss", "KappaWealth", "Kappu", "Keepo", "KevinTurtle", "Kippa", "KomodoHype", "KonCha", "Kreygasm", "LUL", "LaundryBasket", "LesbianPride", "MVGame", "Mau5", "MaxLOL", "MercyWing1", "MercyWing2", "MikeHogu", "MingLee", "ModLove", "MorphinTime", "MrDestructoid", "MyAvatar", "NewRecord", "NinjaGrumpy", "NomNom", "NonbinaryPride", "NotATK", "NotLikeThis", "O.O", "O.o", "OSFrog", "O_O", "O_o", "O_o", "OhMyDog", "OneHand", "OpieOP", "OptimizePrime", "PJSalt", "PJSugar", "PMSTwin", "PRChase", "PanicVis", "PansexualPride", "PartyHat", "PartyTime", "PeoplesChamp", "PermaSmug", "PicoMause", "PinkMercy", "PipeHype", "PixelBob", "PizzaTime", "PogBones", "PogChamp", "Poooound", "PopCorn", "PoroSad", "PotFriend", "PowerUpL", "PowerUpR", "PraiseIt", "PrimeMe", "PunOko", "PunchTrees", "R)", "R)", "R-)", "RaccAttack", "RalpherZ", "RedCoat", "ResidentSleeper", "RitzMitz", "RlyTho", "RuleFive", "RyuChamp", "SMOrc", "SSSsss", "SabaPing", "SeemsGood", "SeriousSloth", "ShadyLulu", "ShazBotstix", "Shush", "SingsMic", "SingsNote", "SmoocherZ", "SoBayed", "SoonerLater", "Squid1", "Squid2", "Squid3", "Squid4", "StinkyCheese", "StinkyGlitch", "StoneLightning", "StrawBeary", "SuperVinlin", "SwiftRage", "TBAngel", "TF2John", "TPFufun", "TPcrunchyroll", "TTours", "TakeNRG", "TearGlove", "TehePelo", "ThankEgg", "TheIlluminati", "TheRinger", "TheTarFu", "TheThing", "ThunBeast", "TinyFace", "TombRaid", "TooSpicy", "TransgenderPride", "TriHard", "TwitchLit", "TwitchRPG", "TwitchSings", "TwitchUnity", "TwitchVotes", "UWot", "UnSane", "UncleNox", "VirtualHug", "VoHiYo", "VoteNay", "VoteYea", "WTRuck", "WholeWheat", "WhySoSerious", "WutFace", "YouDontSay", "YouWHY", "bleedPurple", "cmonBruh", "copyThis", "duDudu", "imGlitch", "mcaT", "o.O", "o.o", "o_O", "o_o", "panicBasket", "pastaThat", "riPepperonis", "twitchRaid", "BagOfMemes", "FlipThis", "FortBush", "FortHype", "FortLlama", "FortOne", "KappaHD", "MindManners", "MiniK", "PartyPopper", "PokAegislash", "PokBlastoise", "PokBlaziken", "PokBraixen", "PokChandelure", "PokCharizard", "PokCroagunk", "PokDarkrai", "PokDecidueye", "PokEmpoleon", "PokGarchomp", "PokGardevoir", "PokGengar", "PokLucario", "PokMachamp", "PokMaskedpika", "PokMewtwo", "PokPikachu", "PokSceptile", "PokScizor", "PokShadowmew", "PokSuicune", "PokWeavile", "PrimeRlyTho", "PrimeUWot", "PrimeYouDontSay", "ScaredyCat", "TableHere", ":tf:", "AngelThump", "ariW", "BroBalt", "bttvNice", "bUrself", "CandianRage", "CiGrip", "ConcernDoge", "cvHazmat", "cvL", "cvMask", "cvR", "D:", "DatSauce", "DogChamp", "DuckerZ", "FeelsAmazingMan", "FeelsBadMan", "FeelsBirthdayMan", "FeelsGoodMan", "FeelsSnowMan", "FeelsSnowyMan", "FireSpeed", "FishMoley", "ForeverAlone", "GabeN", "haHAA", "HailHelix", "Hhhehehe", "IceCold", "KappaCool", "KaRappa", "KKona", "LuL", "monkaS", "NaM", "notsquishY", "PoleDoge", "RarePepe", "RonSmug", "SaltyCorn", "ShoopDaWhoop", "SoSnowy", "SourPls", "SqShy", "TaxiBro", "TwaT", "VapeNation", "VisLaud", "WatChuSay", "Wowee", "WubTF", "AndKnuckles", "BeanieHipster", "BORT", "CatBag", "LaterSooner", "LilZ", "ManChicken", "OBOY", "OiMinna", "YooHoo", "ZliL", "ZrehplaR", "ZreknarF"]
     ffzEmotes ? addedEmotes.push(ffzEmotesArray) : null
     bttvEmotes ? addedEmotes.push(bttvEmotesArray) : null
@@ -375,3 +375,15 @@ const acronomize = (phrase) => {
   return acronym.join('')
 }
 exports.acronomize = acronomize
+
+const getSTV = async (channel) => {
+  try {
+    let sevenTVEmotes = await fetch(`https://api.7tv.app/v2/users/${channel}/emotes`)
+    return sevenTVEmotes.map(emotes => {
+      return emotes.name
+    })
+  } catch (e) {
+    throw e
+  }
+}
+exports.getSTV = getSTV
