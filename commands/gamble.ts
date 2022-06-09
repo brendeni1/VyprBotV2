@@ -27,12 +27,12 @@ module.exports = async (client, context) => {
 		utils.setData(`${context.user}Nammers`, nammers + amount)
 		return {
 			success: true,
-			reply: `You won ${amount} nammer${amount==1?'':'s'}! You now have ${nammers + amount}.`
+			reply: `You won ${amount} nammer${amount==1?'':'s'}! You now have ${nammers + amount}. ${await utils.bestEmote(context.channel, ['YAAAY', 'HYPE', 'Swag', 'EZ', 'catJam', '😎', '👌'])}`
 		}
 	}
 	utils.setData(`${context.user}Nammers`, nammers - amount)
 	return {
 		success: true,
-		reply: `You lost ${amount} nammer${amount==1?'':'s'}! You now have ${nammers - amount}.`
+		reply: `You lost ${amount} nammer${amount==1?'':'s'}! You now have ${nammers - amount}. ${await utils.bestEmote(context.channel, ['BRUHFAINT', 'BruhFaint', 'PANIC', 'FeelsBadMan', '😵', '⛔'])}`
 	}
 }

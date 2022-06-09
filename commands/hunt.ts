@@ -47,6 +47,6 @@ module.exports = async (client, context) => {
 	}, 3600000)
 	return {
 		success: true,
-		reply: `${message} | You have ${nammers + amount} nammers.`
+		reply: `${message} | You have ${nammers + amount} nammers. ${await utils.bestEmote(context.channel, ['NOTED', 'Tasty', 'YESIDOTHINKSO', 'KannaSip', 'catJam', '😎', '👌'])}`
 	}
 }
