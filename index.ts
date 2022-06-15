@@ -94,8 +94,12 @@ client.on("PRIVMSG", async (msg) => {
       reply = reply.length > 490
         ? reply.slice(0, 490) + "..."
         : reply
+      if(`${reply}` == 'true') {
+        client.whisper('darkvypr', `true error: ${command}`)
+      }
       client.me(channel, reply)
     } catch (e) {
+      client.whisper('darkvypr', `catch e: ${command}`)
       client.me(channel, `${user} --> ${e}`)
     }
   }
@@ -124,6 +128,7 @@ client.on("PRIVMSG", async (msg) => {
 
   let noti = await notifications(userlow)
   if (noti) {
+    client.whisper('darkvypr', `${noti.reply}`)
     sendReply(noti.reply)
   }
 
@@ -190,7 +195,7 @@ client.on("PRIVMSG", async (msg) => {
       cooldown.addToCooldown(userlow, 3000)
     }
   }
-  
+
   if (msg.channelID == '424993941' && /asd/i.test(message)) {
     let emotes = await utils.getSTV(channel)
     emotes = utils.randArrayElement(emotes)

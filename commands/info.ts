@@ -1,14 +1,20 @@
 import utils from '../utils'
 
 module.exports = async (client, context) => {
-	const idCheck = context.args.join(' ').match(/(u?id|lookup)(:|=)(true|false)/i)
-	const id = idCheck ? Boolean(idCheck[2].toLowerCase()) : false;
-	if (idCheck) {
-		context.args.splice(context.args.indexOf(idCheck[0]), 1)
+  let id = false
+	if (context.args[0] && /^\d+$/.test(context.args[0])) {
+		id = true
 	}
-	let user = context.args[0] ? context.args[0].toLowerCase().replace('@', '') : context.user
+	const uidCheck = context.args.join(' ').match(/uid(:|=)(true|false)/i)
+  if (uidCheck) {
+    id = (uidCheck[2] === 'true')
+    context.args.splice(context.args.indexOf(uidCheck[0]), 1)
+  }
+	const chatter = context.args[0]
+    ? context.args[0].toLowerCase().replace('@', '')
+    : context.user
 	try {
-		let userData = await utils.fetch(`https://api.ivr.fi/v2/twitch/user/${user}?id=${id}`)
+		let userData = await utils.fetch(`https://api.ivr.fi/v2/twitch/user/${chatter}?id=${id}`)
 		let creationDate = utils.formatDate(userData.createdAt, "fullDate")
 		let timeSinceCreation = utils.formatDelta(creationDate)
 		var roles = []
