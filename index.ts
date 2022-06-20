@@ -1,4 +1,4 @@
-// require("http").createServer((_, res) => res.end("Alive!")).listen(9090)
+require("http").createServer((_, res) => res.end("Alive!")).listen(9090)
 import fs from 'fs-extra'
 import handler from './commands/handler'
 import cooldown from './cooldown'
