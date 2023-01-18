@@ -2,6 +2,7 @@
   "dependencies": {
     "@replit/database": "^2.0.1",
     "appid": "^1.0.3",
+    "countryjs": "^1.8.0",
     "dank-twitch-irc": "^4.3.0",
     "dateformat": "^4.6.3",
     "directory-import": "^2.3.1",
