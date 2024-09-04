@@ -1,10 +1,10 @@
 # Owner Info
 
-Owner: `DarkVypr`
+Owner: `Brenden`
 
-Owner Discord: `DarkVypr#0001`
+Owner Discord: `brenden.i1`
 
-Owner Twitch: `DarkVypr`
+Owner Twitch: `brenden_i`
 
 ---
 
@@ -22,7 +22,7 @@ The main reason that I rewrote this bot is because I wanted to clean up the code
 
 # How can I get the bot in my chat?
 
-If you would like this bot to be added to your chat, make sure to read [the commands page](https://darkvypr.com/commands) before.
+If you would like this bot to be added to your chat, make sure to read the commands page before.
 
 After this, use "vb join" command in the bot's chat, or in any chat that the bot is in, and the bot will be available in your chat.
 
